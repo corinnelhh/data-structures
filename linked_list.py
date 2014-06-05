@@ -10,9 +10,10 @@ class List(object):
         self.head = None
 
     def insert(self, val):
-        a = val
-        a.next = self.head
-        self.head = a
+        a = Node(val)
+        a.data = val
+        val.next = self.head
+        self.head = val
         self.size += 1
 
     def pop(self):
