@@ -1,26 +1,37 @@
 class Node(object):
-    def __init__(self, data):
+    def __init__(self, data, node = None):
         self.data = data
-        self.next = None
+        self.next = node
+
+    def set_next(self, node):
+        self.next = node
+
+    def get_next(self):
+        return self.next
+
+    def get_data(self):
+        return self.data
 
 
-class List(object):
-    def __init__(self):
+class LinkedList(object):
+    def __init__(self, *data):
         self.size = 0
         self.head = None
+        for val in data:
+            self.insert(val)
 
     def insert(self, val):
-        a = Node(val)
-        a.data = val
-        val.next = self.head
-        self.head = val
+        a = Node(val, self.head)
+        self.head = a
         self.size += 1
 
     def pop(self):
         a = self.head
-        self.head = a.next
+        if a is None:
+            raise IndexError
+        self.head = a.get_next()
         self.size -= 1
-        return a.data
+        return a.get_data()
 
     def size(self):
         return self.size
@@ -28,19 +39,20 @@ class List(object):
     def search(self, val):
         a = self.head
         while a is not None:
-            if a.data == val:
-                return a
-            a = a.next
+            if a.get_data() == val:
+                return a.get_data()
+            a = a.get_next()
         return None
 
-    def remove(self, node):
+    def remove(self, val):
         a = self.head
-        while a is not None:
-            if a.next is node:
-                a.next = node.next
-                node.next = None
-                self.size -= 1
-            a = a.next
+        while a.get_next() is not None:
+            if a.get_next().get_data() == val:
+                remove_node = a.get_next()
+                b = remove_node.get_next()
+                remove_node.set_next(None)
+                a.set_next(b)
+                return
 
     def print_me(self):
         a = self.head
