@@ -2,15 +2,37 @@ import pytest
 from linked_list import Node, List
 
 
+@pytest.fixture(scope="function")
+def iterate_nodes():
+    a = Node("one")
+    b = Node("two")
+    c = Node("three")
+    d = Node("four")
+    e = Node("five")
+    return a, b, c, d, e
+
+
+@pytest.fixture(scope="function")
+def create_populated_list(iterate_nodes):
+    a, b, c, d, e = iterate_nodes
+    our_list = List()
+
+    our_list.insert(a)
+    our_list.insert(b)
+    our_list.insert(c)
+    our_list.insert(d)
+    our_list.insert(e)
+
+    return our_list
+
+
 def test_node_1():
     a = Node("hello")
     assert a.data == "hello"
 
 
-def test_node_2():
-    a = Node("one")
-    b = Node("two")
-    c = Node("three")
+def test_node_2(iterate_nodes):
+    a, b, c, d, e = iterate_nodes
     a.next = b
     b.next = c
     assert a.next is b
@@ -43,48 +65,30 @@ def test_insert_2():
     assert a.next is None
 
 
-def test_pop():
-    linked = List()
-    a = Node("one")
-    b = Node("two")
+def test_pop(iterate_nodes, create_populated_list):
+    a, b, c, d, e = iterate_nodes
+    linked = create_populated_list
 
-    linked.insert(a)
-    linked.insert(b)
+    assert linked.pop() == e.data
 
-    assert linked.pop() == b.data
-
-    assert linked.head is not b
-    assert linked.head is a
-    assert linked.size == 1
+    assert linked.head is not e
+    assert linked.head is d
+    assert linked.size == 4
 
 
-def test_search():
-    linked = List()
-    a = Node("one")
-    b = Node("two")
-
-    linked.insert(a)
-    linked.insert(b)
+def test_search(iterate_nodes, create_populated_list):
+    a, b, c, d, e = iterate_nodes
+    linked = create_populated_list
 
     assert linked.search("one") is a
     assert linked.search("two") is b
     assert linked.search("happy") is None
-    assert linked.size == 2
+    assert linked.size == 5
 
 
-def test_remove():
-    linked = List()
-    a = Node("one")
-    b = Node("two")
-    c = Node("three")
-    d = Node("four")
-    e = Node("five")
-
-    linked.insert(a)
-    linked.insert(b)
-    linked.insert(c)
-    linked.insert(d)
-    linked.insert(e)
+def test_remove(iterate_nodes, create_populated_list):
+    a, b, c, d, e = iterate_nodes
+    linked = create_populated_list
 
     linked.remove(c)
 
@@ -93,16 +97,12 @@ def test_remove():
     assert c.next is None
 
 
-def test_print_me(capfd):
-    linked = List()
-    a = Node("one")
-    b = Node("two")
-
-    linked.insert(a)
-    linked.insert(b)
+def test_print_me(capfd, iterate_nodes, create_populated_list):
+    a, b, c, d, e = iterate_nodes
+    linked = create_populated_list
 
     linked.print_me()
 
     out, err = capfd.readouterr()
 
-    assert out == "('two','one')\n"
+    assert out == "('five','four','three','two','one')\n"
