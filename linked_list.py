@@ -72,6 +72,13 @@ class LinkedList(object):
         node = self.head
         result = "("
         while node.get_next() is not None:
-            result = result + "'" + str(node.get_data()) + "', "
+            val = node.get_data()
+            if type(val) == type(u'hello'):
+                result = result + "'" + str(val) + "', "
+            else:
+                result = result + "" + str(val) + ", "
             node = node.get_next()
-        return result + "'" + str(node.get_data()) + "')"
+        if type(node.get_data()) == type(u'hello'):
+            return result + "'" + str(node.get_data()) + "')"
+        else:
+            return result + "" + str(node.get_data()) + ")"

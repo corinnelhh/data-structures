@@ -76,6 +76,8 @@ def test_list_remove():
 
 def test_list_toString():
     llist = LinkedList(*[u'a',u'b',u'c',u'd',u'e'])
-    assert llist.toString() == "('e', 'd', 'c', 'b', 'a')"
+    assert llist.toString() == u'(\'e\', \'d\', \'c\', \'b\', \'a\')'
     llist = LinkedList(*[1,2,3,4,5])
-    assert llist.toString() == "('5', '4', '3', '2', '1')"
+    assert llist.toString() == u'(5, 4, 3, 2, 1)'
+    llist = LinkedList(1,2,3,4,5,*(u'a',u'b',u'c',u'd',u'e'))
+    assert llist.toString() == "('e', 'd', 'c', 'b', 'a', 5, 4, 3, 2, 1)"
