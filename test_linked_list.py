@@ -30,9 +30,15 @@ def test_list_constructor():
     a = LinkedList()
     assert a.size == 0
     assert a.head == None
-    a = LinkedList([1,2,3,4,5])
+    a = LinkedList(*[1,2,3,4,5])
     assert a.size == 5
     assert a.head.get_data() == 5
+
+def test_list_iterable():
+    a = LinkedList(1,2,3,4,5)
+    b = [1,2,3,4,5]
+    for x in a:
+        assert b[x.get_data()-1] == x.get_data()
 
 def test_list_insert():
     llist = LinkedList()
@@ -46,7 +52,7 @@ def test_list_insert():
     assert llist.head.get_next().get_data() == u'b'
 
 def test_list_pop():
-    llist = LinkedList([1,2,3,4,5])
+    llist = LinkedList(*[1,2,3,4,5])
     assert llist.pop() == 5
     assert llist.size == 4
     llist.pop()     # pop 4
@@ -55,13 +61,13 @@ def test_list_pop():
     assert llist.size == 2
 
 def test_list_search():
-    llist = LinkedList([1,2,3,4,5])
+    llist = LinkedList(*[1,2,3,4,5])
     assert llist.search(6) is None
     assert llist.search(5).get_next().get_data() == 4
     assert llist.search(1).get_next() is None
 
 def test_list_remove():
-    llist = LinkedList([1,2,3,4,5])
+    llist = LinkedList(*[1,2,3,4,5])
     assert llist.remove(3).get_next() is None
     assert llist.search(4).get_next() is llist.search(2)
     llist.remove(1)
@@ -69,7 +75,7 @@ def test_list_remove():
     assert llist.size == 3
 
 def test_list_toString():
-    llist = LinkedList([u'a',u'b',u'c',u'd',u'e'])
+    llist = LinkedList(*[u'a',u'b',u'c',u'd',u'e'])
     assert llist.toString() == "('e', 'd', 'c', 'b', 'a')"
-    llist = LinkedList([1,2,3,4,5])
+    llist = LinkedList(*[1,2,3,4,5])
     assert llist.toString() == "('5', '4', '3', '2', '1')"
