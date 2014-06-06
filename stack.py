@@ -1,4 +1,4 @@
-def Node(object):
+class Node(object):
     def __init__(self, data, next_node=None):
         self.data = data
         self.next = next_node
@@ -13,11 +13,12 @@ def Node(object):
         return self.next
 
 
-def Stack(object):
-    def __init__(self, *data):
+class Stack(object):
+    def __init__(self, data=None):
         self.head = None
-        for val in data:
-            self.push(val)
+        if data:
+            for val in data:
+                self.push(val)
 
     def push(self, data):
         a = Node(data, self.head)
