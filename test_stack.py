@@ -3,27 +3,12 @@ from stack import Node, Stack
 
 
 def test_node():
-    our_node = Node("hi")
-    assert our_node.data == "hi"
+    our_node = Node("first")
+    assert our_node.data == "first"
     assert our_node.next is None
 
-
-def test_get_data():
-    our_node = Node("test node")
-    assert our_node.get_data() is "test node"
-
-
-def test_set_next():
-    our_first_node = Node("first")
-    our_second_node = Node("second")
-    our_second_node.set_next(our_first_node)
-    assert our_second_node.next is our_first_node
-
-
-def test_get_next():
-    our_first_node = Node("first")
-    our_second_node = Node("second", our_first_node)
-    assert our_second_node.get_next() is our_first_node
+    our_other_node = Node("second", our_node)
+    assert our_other_node.next is our_node
 
 
 def test_stack_creation():
@@ -31,12 +16,19 @@ def test_stack_creation():
     assert our_stack.head is None
 
 
-def test_push():
+def test_push_1():
     our_list = ["first", "second", "third", "fourth"]
     our_stack = Stack(our_list)
 
     our_stack.push("fifth")
-    assert our_stack.head.get_data() is "fifth"
+    assert our_stack.head.data is "fifth"
+
+
+def test_push_2():
+    our_stack = Stack()
+    our_stack.push("first")
+
+    assert our_stack.head.data is "first"
 
 
 def test_pop_1():
