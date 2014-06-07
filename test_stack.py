@@ -41,3 +41,6 @@ def test_pop_2():
     our_list = ["first", "second", "third", "fourth"]
     our_stack = Stack(our_list)
     assert our_stack.pop() == "fourth"
+    assert our_stack.pop() == "third"
+    assert our_stack.pop() == "second"
+    assert our_stack.pop() == "first"

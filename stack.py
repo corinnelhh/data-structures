@@ -18,6 +18,5 @@ class Stack(object):
         if self.head is None:
             raise IndexError
         our_returned_value = self.head.data
-        self.head.next = None
         self.head = self.head.next
         return our_returned_value
