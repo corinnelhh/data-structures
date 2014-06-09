@@ -1,108 +1,83 @@
 import pytest
-from linked_list import Node, List
+from linked_list import Node, LinkedList
 
-
-@pytest.fixture(scope="function")
-def iterate_nodes():
-    a = Node("one")
-    b = Node("two")
-    c = Node("three")
-    d = Node("four")
-    e = Node("five")
-    return a, b, c, d, e
-
-
-@pytest.fixture(scope="function")
-def create_populated_list(iterate_nodes):
-    a, b, c, d, e = iterate_nodes
-    our_list = List()
-
-    our_list.insert(a)
-    our_list.insert(b)
-    our_list.insert(c)
-    our_list.insert(d)
-    our_list.insert(e)
-
-    return our_list
-
-
-def test_node_1():
-    a = Node("hello")
-    assert a.data == "hello"
-
-
-def test_node_2(iterate_nodes):
-    a, b, c, d, e = iterate_nodes
-    a.next = b
-    b.next = c
-    assert a.next is b
-    assert b.data == a.next.data
-    assert c.data == a.next.next.data
-
-
-def test_insert_1():
-    a = List()
-    assert a.head is None
-    assert a.size == 0
-
-
-def test_insert_2():
-    linked = List()
-    a = Node("first")
-    b = Node("second")
-
-    linked.insert(a)
-
-    assert linked.head is a
-    assert linked.size == 1
-
-    linked.insert(b)
-
-    assert linked.head is not a
-    assert linked.head is b
-    assert linked.size == 2
-    assert linked.head.next.data == a.data
+def test_node_constructor():
+    a = Node(u'a')
+    b = Node(u'b')
+    assert a.data == u'a'
     assert a.next is None
 
+def test_node_set_next():
+    a = Node(u'a')
+    b = Node(u'b')
+    a.set_next(b)
+    assert a.next is b
+    assert a.next.data == b.data
 
-def test_pop(iterate_nodes, create_populated_list):
-    a, b, c, d, e = iterate_nodes
-    linked = create_populated_list
+def test_node_get_next():
+    a = Node(u'a')
+    b = Node(u'b', a)
+    assert a.get_next() is None
+    assert b.get_next() is a
 
-    assert linked.pop() == e.data
+def test_node_get_data():
+    a = Node(u'a')
+    b = Node(u'b', a)
+    assert a.get_data() == u'a'
+    assert b.get_data() == u'b'
 
-    assert linked.head is not e
-    assert linked.head is d
-    assert linked.size == 4
+def test_list_constructor():
+    a = LinkedList()
+    assert a.size == 0
+    assert a.head == None
+    a = LinkedList(*[1,2,3,4,5])
+    assert a.size == 5
+    assert a.head.get_data() == 5
 
+def test_list_iterable():
+    a = LinkedList(1,2,3,4,5)
+    b = [1,2,3,4,5]
+    for x in a:
+        assert b[x.get_data()-1] == x.get_data()
 
-def test_search(iterate_nodes, create_populated_list):
-    a, b, c, d, e = iterate_nodes
-    linked = create_populated_list
+def test_list_insert():
+    llist = LinkedList()
+    llist.insert(u'e')
+    llist.insert(u'd')
+    llist.insert(u'c')
+    llist.insert(u'b')
+    llist.insert(u'a')
+    assert llist.size == 5
+    assert llist.head.get_data() == u'a'
+    assert llist.head.get_next().get_data() == u'b'
 
-    assert linked.search("one") is a
-    assert linked.search("two") is b
-    assert linked.search("happy") is None
-    assert linked.size == 5
+def test_list_pop():
+    llist = LinkedList(*[1,2,3,4,5])
+    assert llist.pop() == 5
+    assert llist.size == 4
+    llist.pop()     # pop 4
+    llist.pop()     # pop 3
+    assert llist.head.get_data() == 2
+    assert llist.size == 2
 
+def test_list_search():
+    llist = LinkedList(*[1,2,3,4,5])
+    assert llist.search(6) is None
+    assert llist.search(5).get_next().get_data() == 4
+    assert llist.search(1).get_next() is None
 
-def test_remove(iterate_nodes, create_populated_list):
-    a, b, c, d, e = iterate_nodes
-    linked = create_populated_list
+def test_list_remove():
+    llist = LinkedList(*[1,2,3,4,5])
+    assert llist.remove(3).get_next() is None
+    assert llist.search(4).get_next() is llist.search(2)
+    llist.remove(1)
+    assert llist.search(2).get_next() is None
+    assert llist.size == 3
 
-    linked.remove(c)
-
-    assert linked.size == 4
-    assert d.next is b
-    assert c.next is None
-
-
-def test_print_me(capfd, iterate_nodes, create_populated_list):
-    a, b, c, d, e = iterate_nodes
-    linked = create_populated_list
-
-    linked.print_me()
-
-    out, err = capfd.readouterr()
-
-    assert out == "('five','four','three','two','one')\n"
+def test_list_toString():
+    llist = LinkedList(*[u'a',u'b',u'c',u'd',u'e'])
+    assert llist.toString() == u'(\'e\', \'d\', \'c\', \'b\', \'a\')'
+    llist = LinkedList(*[1,2,3,4,5])
+    assert llist.toString() == u'(5, 4, 3, 2, 1)'
+    llist = LinkedList(1,2,3,4,5,*(u'a',u'b',u'c',u'd',u'e'))
+    assert llist.toString() == "('e', 'd', 'c', 'b', 'a', 5, 4, 3, 2, 1)"
