@@ -4,9 +4,6 @@ class Node(object):
         self.next = next_node
         self.last = None
 
-    def set_last(self, last_node):
-        self.last = last_node
-
 
 class Queue(object):
     def __init__(self, data=None):
@@ -21,7 +18,7 @@ class Queue(object):
         self.last_node = self.head
         self.head = Node(data, self.head)
         if self.last_node:
-            self.last_node.set_last(self.head)
+            self.last_node.last = self.head
         if self.tail is None:
             self.tail = self.head
         self.size += 1
