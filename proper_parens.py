@@ -1,7 +1,6 @@
 def paren_checker(our_string):
-    our_chars = list(our_string)
     open_paren = 0
-    for char in our_chars:
+    for char in our_string:
         if char == u'(':
             open_paren += 1
         elif char == u')':
