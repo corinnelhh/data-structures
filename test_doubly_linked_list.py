@@ -1,5 +1,6 @@
 import pytest
 from doubly_linked_list import Node, List
+import sys
 
 
 def test_node():
@@ -9,7 +10,7 @@ def test_node():
     assert our_node.last is None
 
 
-def test_queue_creation():
+def test_list_creation():
     our_list = List()
     assert our_list.head is None
     assert our_list.tail is None
@@ -77,7 +78,7 @@ def test_shift():
     assert our_list.tail.data == "first"
 
 
-def test_remove():
+def test_remove(capsys):
     our_list = List()
     our_list.insert("first")
     our_list.insert("second")
@@ -90,3 +91,6 @@ def test_remove():
 
     assert our_list.head.next.data == "first"
     assert our_list.tail.last.data == "third"
+
+    with pytest.raises(IndexError):
+        our_list.remove("second")

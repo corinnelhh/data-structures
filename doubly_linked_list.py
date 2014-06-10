@@ -6,25 +6,34 @@ class Node(object):
 
 
 class List(object):
-    def __init__(self):
+    def __init__(self, *data):
         self.head = None
         self.tail = None
+        if data:
+            for val in data:
+                self.insert(val)
+
+    def __iter__(self):
+        a = self.head
+        while a:
+            yield a
+            a = a.next
 
     def insert(self, data):
-        self.last_node = self.head
+        last_node = self.head
         self.head = Node(data)
-        self.head.next = self.last_node
-        if self.last_node:
-            self.last_node.last = self.head
+        self.head.next = last_node
+        if last_node:
+            last_node.last = self.head
         if self.tail is None:
             self.tail = self.head
 
     def append(self, data):
-        self.next_node = self.tail
+        next_node = self.tail
         self.tail = Node(data)
-        self.tail.last = self.next_node
-        if self.next_node:
-            self.next_node.next = self.tail
+        self.tail.last = next_node
+        if next_node:
+            next_node.next = self.tail
         if self.head is None:
             self.head = self.tail
 
@@ -46,11 +55,15 @@ class List(object):
 
     def remove(self, val):
         a = self.head
+        val_found = False
         while a is not None:
             if a.data == val:
+                val_found = True
                 if a == self.head:
                     a.next.last = None
                 else:
                     a.next.last = a.last
                     a.last.next = a.next
             a = a.next
+        if not val_found:
+            raise IndexError
