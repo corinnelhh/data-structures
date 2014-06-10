@@ -1,36 +1,36 @@
 class Node(object):
-    def __init__(self, data, next_node=None):
+    def __init__(self, data):
         self.data = data
-        self.next = next_node
-        self.last = None
-
+        self.next = None
 
 class Queue(object):
-    def __init__(self, data=None):
+    def __init__(self, *data):
+        self.size = 0
         self.head = None
         self.tail = None
-        self.size = 0
         if data:
-            for val in data:
-                self.enqueue(val)
+            for i in data:
+                self.enqueue(i)
 
-    def enqueue(self, data):
-        self.last_node = self.head
-        self.head = Node(data, self.head)
-        if self.last_node:
-            self.last_node.last = self.head
-        if self.tail is None:
-            self.tail = self.head
+    def enqueue(self, val):
+        if self.size == 0:
+            new_node = Node(val)
+            self.head = new_node
+            self.tail = new_node
+        else:
+            new_node = Node(val)
+            self.tail.next = new_node
+            self.tail = new_node
         self.size += 1
 
     def dequeue(self):
-        if self.tail is None:
-            print "Sorry, the queue is empty!"
+        if self.size <= 0:
             raise IndexError
-        our_returned_value = self.tail.data
-        self.tail = self.tail.last
+        return_node = self.head
+        self.head = self.head.next
+        return_node.next = None
         self.size -= 1
-        return our_returned_value
+        return return_node.data
 
-    def size_me(self):
+    def __size__(self):
         return self.size
