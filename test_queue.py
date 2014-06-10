@@ -20,13 +20,14 @@ def test_queue_init():
 def test_enqueue():
     q = Queue()
     q.enqueue('a')
-    assert q.size == 1
-    assert q.head.data == 'a'
     assert q.tail is q.head         #testing for a Queue of 1 element
+    q.dequeue()
+    assert q.size == 0
     q.enqueue('b')
-    assert q.head.next is q.tail
+    assert q.size == 1
+    assert q.head.data == 'b'
     q.enqueue('c')
-    assert q.size == 3
+    assert q.size == 2
     q.enqueue('d')
     assert q.tail.data == 'd'
 
