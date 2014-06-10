@@ -1,66 +1,51 @@
 import pytest
 from queue import Node, Queue
 
+def test_Node():
+    a = Node(5)
+    b = Node('x')
+    assert a.data == 5
+    assert a.next is None
+    assert b is not a
+    assert b.data == 'x'
 
-def test_node():
-    our_node = Node("first")
-    assert our_node.data == "first"
-    assert our_node.next is None
-
-    our_next_node = Node("second", our_node)
-    assert our_next_node.data == "second"
-    assert our_next_node.next is our_node
-
-
-def test_queue_creation():
-    our_queue = Queue()
-    assert our_queue.head is None
-    assert our_queue.tail is None
-    assert our_queue.size == 0
-
+def test_queue_init():
+    q = Queue(1,'a',2,'b',3)
+    assert q.head.data == 1
+    assert q.tail.data == 3
+    assert q.size == 5
+    assert q.tail.next is None
+    assert q.head.next.data == 'a'
 
 def test_enqueue():
-    our_queue = Queue()
-    our_queue.enqueue("first")
-
-    assert our_queue.head.data == "first"
-    assert our_queue.tail.data == "first"
-    assert our_queue.size == 1
-
-    our_queue.enqueue("second")
-    our_queue.enqueue("third")
-
-    assert our_queue.head.data == "third"
-    assert our_queue.tail.data == "first"
-    assert our_queue.size == 3
-
-    assert our_queue.head.next.data == "second"
-    assert our_queue.tail.last.data == "second"
-    assert our_queue.head.next.last.data == "third"
-    assert our_queue.tail.next is None
-
+    q = Queue()
+    q.enqueue('a')
+    assert q.size == 1
+    assert q.head.data == 'a'
+    assert q.tail is q.head         #testing for a Queue of 1 element
+    q.enqueue('b')
+    assert q.head.next is q.tail
+    q.enqueue('c')
+    assert q.size == 3
+    q.enqueue('d')
+    assert q.tail.data == 'd'
 
 def test_dequeue():
-    our_list = ["first", "second", "third"]
-    our_queue = Queue(our_list)
+    q = Queue(u'first', u'second', u'third', u'fourth', u'fifth')
+    q.enqueue(u'sixth')
+    q.enqueue(u'seventh')
+    assert q.dequeue() == u'first'         # 1st in line got removed
+    assert q.size == 6
+    q.dequeue()                            # 2nd in line
+    q.dequeue()                            # 3rd in line
+    assert q.dequeue() == u'fourth'        # 4th in line
+    assert q.size == 3
 
-    assert our_queue.size == 3
-
-    assert our_queue.dequeue() == "first"
-
-    assert our_queue.head.data == "third"
-    assert our_queue.tail.data == "second"
-
-    assert our_queue.size == 2
-
-
-def test_size_me():
-    our_queue = Queue()
-    our_queue.enqueue("first")
-
-    assert our_queue.size_me() == 1
-
-    our_queue.enqueue("second")
-    our_queue.enqueue("third")
-
-    assert our_queue.size_me() == 3
+def test_size():
+    q = Queue(1,2,3,4,5)
+    assert q.size is 5
+    q.enqueue(6)
+    assert q.size == 6
+    q.dequeue()
+    q.dequeue()
+    assert q.size == 4
