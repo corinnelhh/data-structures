@@ -32,6 +32,7 @@ def test_enqueue():
     assert q.tail.data == 'd'
 
 def test_dequeue():
+<<<<<<< HEAD
     q = Queue(u'first', u'second', u'third', u'fourth', u'fifth')
     q.enqueue(u'sixth')
     q.enqueue(u'seventh')
@@ -50,3 +51,34 @@ def test_size():
     q.dequeue()
     q.dequeue()
     assert q.size() == 4
+=======
+    our_list = ["first", "second", "third"]
+    our_queue = Queue(our_list)
+
+    assert our_queue.size == 3
+
+    assert our_queue.dequeue() == "first"
+
+    assert our_queue.head.data == "third"
+    assert our_queue.tail.data == "second"
+
+    assert our_queue.size == 2
+
+    our_queue.dequeue()
+    our_queue.dequeue()
+
+    with pytest.raises(IndexError):
+        our_queue.dequeue()
+
+
+def test_size_me():
+    our_queue = Queue()
+    our_queue.enqueue("first")
+
+    assert our_queue.size_me() == 1
+
+    our_queue.enqueue("second")
+    our_queue.enqueue("third")
+
+    assert our_queue.size_me() == 3
+>>>>>>> Queue
