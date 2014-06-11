@@ -53,6 +53,12 @@ def test_dequeue():
 
     assert our_queue.size == 2
 
+    our_queue.dequeue()
+    our_queue.dequeue()
+
+    with pytest.raises(IndexError):
+        our_queue.dequeue()
+
 
 def test_size_me():
     our_queue = Queue()
