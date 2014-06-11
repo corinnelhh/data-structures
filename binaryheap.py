@@ -16,13 +16,25 @@ class BinaryHeap(object) :
             self._list[tmp_index], self._list[cur_index] = self._list[cur_index], self._list[tmp_index]
             cur_index = tmp_index
     def pop(self) :
-        # test if is empty
-        self._list[0] = self._list.pop()
+        if not len(self._list):
+            return
+        if len(self._list) == 1 :
+            self._list.pop()
+            return
+        self._list[0] = self._list[-1]
+        self._list.pop()
         parent_index = 0
         height = int(math.log(len(self._list), 2))
+        print height
+        if ((parent_index*2)+1 == len(self._list)-1) :
+            if (self._list[(parent_index*2)+1] > self._list[parent_index]):
+                self._list[parent_index] = self._list[(parent_index*2)+1]
+            return
+
         while height >0 :
             lchild = (parent_index*2)+1
             rchild = (parent_index*2)+2
+            print lchild, rchild
             if (self._list[parent_index] > self._list[lchild] and
                 self._list[parent_index] > self._list[rchild]):
                 break
@@ -33,16 +45,15 @@ class BinaryHeap(object) :
                 self._list[parent_index] = self._list[rchild]
                 parent_index = rchild
             height -= height
-            if ((parent_index*2)+2 < len(self._list)-1):
+            print parent_index
+            if ((parent_index*2)+2 == len(self._list)-1):
                 break
-        lchild = parent_index*2 + 1
-        rchild = parent_index*2 + 2
-        if (rchild == len(self._list)-1):
-            if self._list[lchild] < self._list[rchild]:
-                self._list[parent_index], self._list[rchild] = self._list[rchild], self._list[parent_node]
-            else:
 
-            if (self._list[parent_index] < self._list[(parent_index*2)+2]) :
+        if ((parent_index*2)+1 == len(self._list)-1) :
+            if (self._list[(parent_index*2)+1] > self._list[parent_index]):
+                self._list[parent_index] = self._list[(parent_index*2)+1]
+
+
 
 
 

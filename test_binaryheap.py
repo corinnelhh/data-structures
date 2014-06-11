@@ -26,14 +26,13 @@ def test_push():
 def test_pop():
     bt = BinaryHeap()
     for i in range(50):
-        bt.push(random.randint(0,100))
+        bt.push(random.randint(0,1000))
+
     for i in range(49):
         tmp = max(bt._list[1:])
         bt.pop()
         assert  tmp == bt._list[0]
-
-
-
-
+    bt.pop()
+    assert 0 == len(bt._list)
 
 
