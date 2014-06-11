@@ -31,4 +31,4 @@ Resources used include:
     example using "yield"
     http://stackoverflow.com/questions/280243/python-linked-list
 
-Collaborators: Corinne, Duy
+Collaborators: Corinne, Duy, Muazzez
