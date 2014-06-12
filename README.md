@@ -4,13 +4,20 @@ data-structures
 ##Types of data structures in this repository
 
     - Singly-linked list
+        The singly-linked list is implemented without using the native Python list construction. There are two classes: a         Node class and a List class. Each Node has a single pointer to the Node that follows it. The List has functions          including `insert`, `remove`, and `pop`. 
     - Doubly-linked list
+        The doubly-linked list is implemented without using the native Python list construction. There are also two              classes: a Node class and a List class. Each Node has two pointers: one pointing to the Node that follows and one         pointing to the Node that precedes it. The List has functions including `insert`, `append`, `pop`, `shift`, and          `remove`. 
+    - Binary Heap
+        The binary heap can be initialized as either a "min heap" (where the smallest value is always the head of the            heap), or a "max heap" (where the largest value is the head). 
     
 ##Implementations of these data structures
 
     - Queue
     - Stack
-
+    - Priority Queue
+        The priority queue is implemented with an underlying binary heap data structure. The queue supports the following         methods: `push`, `pop`, and `peek`. Nodes are initialized with a "data" value and a manually set "priority"              value which must be an integer. Each Node is initialized with a unique order. Nodes are sorted first according to         priority (where the maximum value is the highest priority), and second according to order (where the lowest              "order", i.e. priority of initialization, is the highest priority. 
+        
+        
 ##Miscellaneous content
 
     -Simple parentheses checker
