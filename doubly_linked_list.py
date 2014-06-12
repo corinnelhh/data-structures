@@ -43,6 +43,7 @@ class List(object):
             raise IndexError
         our_returned_value = self.head.data
         self.head = self.head.next
+        self.head.last = None
         return our_returned_value
 
     def shift(self):
@@ -51,6 +52,7 @@ class List(object):
             raise IndexError
         our_returned_value = self.tail.data
         self.tail = self.tail.last
+        self.tail.next = None
         return our_returned_value
 
     def remove(self, val):
