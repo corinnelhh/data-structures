@@ -1,72 +1,36 @@
-import pytest
-from queue import Node, Queue
+class Node(object):
+    def __init__(self, data, next_node=None):
+        self.data = data
+        self.next = next_node
+        self.last = None
 
 
-def test_node():
-    our_node = Node("first")
-    assert our_node.data == "first"
-    assert our_node.next is None
+class Queue(object):
+    def __init__(self, data=None):
+        self.head = None
+        self.tail = None
+        self.size = 0
+        if data:
+            for val in data:
+                self.enqueue(val)
 
-    our_next_node = Node("second", our_node)
-    assert our_next_node.data == "second"
-    assert our_next_node.next is our_node
+    def enqueue(self, data):
+        self.last_node = self.head
+        self.head = Node(data, self.head)
+        if self.last_node:
+            self.last_node.last = self.head
+        if self.tail is None:
+            self.tail = self.head
+        self.size += 1
 
+    def dequeue(self):
+        if self.tail is None:
+            print "Sorry, the queue is empty!"
+            raise IndexError
+        our_returned_value = self.tail.data
+        self.tail = self.tail.last
+        self.size -= 1
+        return our_returned_value
 
-def test_queue_creation():
-    our_queue = Queue()
-    assert our_queue.head is None
-    assert our_queue.tail is None
-    assert our_queue.size == 0
-
-
-def test_enqueue():
-    our_queue = Queue()
-    our_queue.enqueue("first")
-
-    assert our_queue.head.data == "first"
-    assert our_queue.tail.data == "first"
-    assert our_queue.size == 1
-
-    our_queue.enqueue("second")
-    our_queue.enqueue("third")
-
-    assert our_queue.head.data == "third"
-    assert our_queue.tail.data == "first"
-    assert our_queue.size == 3
-
-    assert our_queue.head.next.data == "second"
-    assert our_queue.tail.last.data == "second"
-    assert our_queue.head.next.last.data == "third"
-    assert our_queue.tail.next is None
-
-
-def test_dequeue():
-    our_list = ["first", "second", "third"]
-    our_queue = Queue(our_list)
-
-    assert our_queue.size == 3
-
-    assert our_queue.dequeue() == "first"
-
-    assert our_queue.head.data == "third"
-    assert our_queue.tail.data == "second"
-
-    assert our_queue.size == 2
-
-    our_queue.dequeue()
-    our_queue.dequeue()
-
-    with pytest.raises(IndexError):
-        our_queue.dequeue()
-
-
-def test_size_me():
-    our_queue = Queue()
-    our_queue.enqueue("first")
-
-    assert our_queue.size_me() == 1
-
-    our_queue.enqueue("second")
-    our_queue.enqueue("third")
-
-    assert our_queue.size_me() == 3
+    def size_me(self):
+        return self.size
