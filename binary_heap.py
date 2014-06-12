@@ -2,9 +2,10 @@
 import math, random
 
 class BinaryHeap(object) :
-    def __init__ (self, *data):
+    def __init__ (self, max=1, *data):
         self._list = []
         self._size = 0
+        self.max = max
         if data:
             for i in data:
                 self.push(i)
@@ -15,7 +16,7 @@ class BinaryHeap(object) :
         self._size += 1
         while parent > 0:
             parent = (child-1)//2
-            if (self._list[child] < self._list[parent]):
+            if self.compare(child, parent):
                 break
             self.swap(child, parent)
             child = parent
@@ -25,9 +26,7 @@ class BinaryHeap(object) :
         if not self._size:
             print "Yo, this is an empty heap."
             raise IndexError
-        if self._size == 1 :
-            self._size = 0
-            return self._list.pop()
+
         val = self._list[0]
         self._list[0] = self._list[-1]
         self._list.pop()
@@ -35,28 +34,23 @@ class BinaryHeap(object) :
         parent, left, right = 0, 1, 2
 
         while right < self._size:
-            if right >= self._size:
-                if self._list[parent] < self._list[left]:
-                    self.swap(parent, left)
-
-            if (self._list[parent] > self._list[left] and
-                self._list[parent] > self._list[right]):
+            if (self.compare(left, parent) and
+                self.compare(right, parent)):
                 break
-            if self._list[right] < self._list[left]:
-                if self._list[parent] < self._list[left]:
-                    self.swap(parent, left)
+
+            if self.compare(right, left):
+                self.swap(parent, left)
                 parent = left
 
             else:
-                if self._list[parent] < self._list[right]:
-                    self.swap(parent, right)
+                self.swap(parent, right)
                 parent = right
 
             left = parent*2 + 1
             right = left + 1
 
         if left < self._size:
-            if self._list[parent] < self._list[left]:
+            if self.compare(parent, left):
                 self.swap(parent, left)
 
         return val
@@ -65,14 +59,20 @@ class BinaryHeap(object) :
     def swap(self, x, y):
         self._list[x], self._list[y] = self._list[y], self._list[x]
 
+    def compare(self, x, y):
+        if self.max:
+            return self._list[x] < self._list[y]
+        else:
+            return self._list[x] > self._list[y]
+
 
 """
         #DEBUGGING
-for x in range(50):
-    a = BinaryHeap(*[random.randint(0,100) for i in range(11)])
+for x in range(10):
+    a = BinaryHeap(1,*[random.randint(0,100) for i in range(11)])
     print str(a._list)
-
 """
+
 
 
 
