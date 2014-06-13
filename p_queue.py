@@ -29,8 +29,7 @@ class P_Queue(object):
 
     def pop(self):
         if not self._size:
-            print "Yo, this is an empty heap."
-            raise IndexError
+            raise IndexError("This is an empty Queue, yo.")
 
         val = self._list[0]
         self._list[0] = self._list[-1]
