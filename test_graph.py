@@ -4,13 +4,10 @@ from graph import Node, Graph
 
 @pytest.fixture(scope="function")
 def initialize_graph():
-    a = Node("a")
-    b = Node("b")
-    c = Node("c")
     g = Graph()
-    g.add_node(a)
-    g.add_node(b)
-    g.add_node(c)
+    a = g.add_node("a")
+    b = g.add_node("b")
+    c = g.add_node("c")
     return a, b, c, g
 
 
@@ -58,8 +55,24 @@ def test_has_edges_2(initialize_graph):
     assert g.has_edge(b, a)
 
 
+def test_delete_edge(initialize_graph):
+    a, b, c, g = initialize_graph
+    g.add_edge(a, b)
+    g.delete_edge(a, b)
+    assert not g.has_edge(a, b)
+    assert not g.has_edge(b, a)
+
+
+def test_delete_non_edge(initialize_graph):
+    a, b, c, g = initialize_graph
+    g.add_edge(a, b)
+    with pytest.raises(KeyError):
+        g.delete_edge(a, c)
+
+
 def test_delete_node(initialize_graph):
     a, b, c, g = initialize_graph
+
     g.delete_node(b)
 
     assert b not in g._nodes
@@ -75,6 +88,7 @@ def test_delete_nonexistent_node(initialize_graph):
 
     with pytest.raises(IndexError):
         g.delete_node(d)
+
 
 
 

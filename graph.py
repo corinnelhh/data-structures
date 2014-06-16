@@ -28,7 +28,23 @@ class Graph(object):
                 self._nodes.append(n2)
             self._edges[(n1, n2)] = w
 
-    #def 
+    def delete_edge(self, n1, n2):
+        try:
+            self._edges.pop((n1, n2))
+        except(KeyError):
+            try:
+                self._edges.pop((n2, n1))
+            except(KeyError):
+                raise KeyError
+
+    def delete_node(self, n):
+        if n not in self._nodes:
+            raise IndexError
+        tmp_dict = self._edges
+        for key in tmp_dict.iterkeys():
+            if (key[0] == n) or (key[1] == n):
+                self.delete_edge(key[0], key[1])
+        self._nodes.remove(n)
 
 
 if __name__ == '__main__':
@@ -36,5 +52,10 @@ if __name__ == '__main__':
     a = g.add_node("a")
     b = g.add_node("b")
     g.add_edge(a, b)
-    for key, value in g._edges.iteritems():
-        print key[0]._data, key[1]._data, value
+    for node in g._nodes:
+        print node._data
+    g.delete_node(b)
+    for node in g._nodes:
+        print node._data
+    #for key, value in g._edges.iteritems():
+      #  print key[0]._data, key[1]._data, value
