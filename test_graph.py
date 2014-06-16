@@ -90,6 +90,10 @@ def test_delete_nonexistent_node(initialize_graph):
         g.delete_node(d)
 
 
+def test_has_node(initialize_graph):
+    a, b, c, g = initialize_graph
+    assert g.has_node(a)
 
+    d = Node("d")
 
-
+    assert g.has_node(d) is False
