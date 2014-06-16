@@ -1,11 +1,12 @@
 #!/usr/bin/env python
-import math, random
+#import math, random
 
-class BinaryHeap(object) :
-    def __init__ (self, max=1, *data):
+
+class BinaryHeap(object):
+    def __init__(self, max_heap=1, *data):
         self._list = []
         self._size = 0
-        self.max = max
+        self.max_heap = max_heap
         if data:
             for i in data:
                 self.push(i)
@@ -15,14 +16,13 @@ class BinaryHeap(object) :
         child = parent = self._size
         self._size += 1
         while parent > 0:
-            parent = (child-1)//2
+            parent = (child - 1) // 2
             if self.compare(child, parent):
                 break
             self.swap(child, parent)
             child = parent
 
-
-    def pop(self) :
+    def pop(self):
         if not self._size:
             print "Yo, this is an empty heap."
             raise IndexError
@@ -34,8 +34,7 @@ class BinaryHeap(object) :
         parent, left, right = 0, 1, 2
 
         while right < self._size:
-            if (self.compare(left, parent) and
-                self.compare(right, parent)):
+            if (self.compare(left, parent) and self.compare(right, parent)):
                 break
 
             if self.compare(right, left):
@@ -46,21 +45,19 @@ class BinaryHeap(object) :
                 self.swap(parent, right)
                 parent = right
 
-            left = parent*2 + 1
+            left = parent * 2 + 1
             right = left + 1
 
         if left < self._size:
             if self.compare(parent, left):
                 self.swap(parent, left)
-
         return val
-
 
     def swap(self, x, y):
         self._list[x], self._list[y] = self._list[y], self._list[x]
 
     def compare(self, x, y):
-        if self.max:
+        if self.max_heap:
             return self._list[x] < self._list[y]
         else:
             return self._list[x] > self._list[y]
