@@ -40,11 +40,27 @@ class Graph(object):
     def delete_node(self, n):
         if n not in self._nodes:
             raise IndexError
-        tmp_dict = self._edges
-        for key in tmp_dict.iterkeys():
+        for key in self._edges.iterkeys():
             if (key[0] == n) or (key[1] == n):
                 self.delete_edge(key[0], key[1])
         self._nodes.remove(n)
+
+    def has_node(self, n):
+        return n in self._nodes
+
+    def has_neighbors(self, n):
+        neighbors = []
+        if n not in self._nodes:
+            raise IndexError
+        for i in self._nodes:
+            if self.has_edge(n, i):
+                neighbors.append(i)
+        return neighbors
+
+    def adjacent(self, n1, n2):
+        if not self.has_node(n1) or not self.has_node(n2):
+            raise IndexError
+        return self.has_edge(n1, n2)
 
 
 if __name__ == '__main__':

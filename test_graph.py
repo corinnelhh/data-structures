@@ -97,3 +97,24 @@ def test_has_node(initialize_graph):
     d = Node("d")
 
     assert g.has_node(d) is False
+
+
+def test_has_neighbors(initialize_graph):
+    a, b, c, g = initialize_graph
+    g.add_edge(a, b)
+    g.add_edge(a, c)
+
+    assert g.has_neighbors(a) == [b, c]
+
+
+def test_adjacent(initialize_graph):
+    a, b, c, g = initialize_graph
+    g.add_edge(a, b)
+    g.add_edge(a, c)
+
+    d = g.add_node("d")
+    e = g.add_node("e")
+    g.add_edge(a, d)
+
+    assert g.adjacent(a, c)
+    assert g.adjacent(a, e) is False
