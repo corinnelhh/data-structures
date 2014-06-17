@@ -6,7 +6,7 @@ import pytest
 
 def test_init_max():
     #TEST for MAX
-    a = BinaryHeap(1,*[random.randint(0,100) for i in range(37)])
+    a = BinaryHeap("max",*[random.randint(0,100) for i in range(37)])
     index = a._size - 1
     while index :
         assert a._list[index] <= a._list[(index-1)//2]
@@ -14,7 +14,7 @@ def test_init_max():
 
 def test_init_min():
     #TEST for MIN
-    a = BinaryHeap(0,*[random.randint(0,100) for i in range(37)])
+    a = BinaryHeap("min",*[random.randint(0,100) for i in range(37)])
     index = a._size - 1
     while index :
         assert a._list[index] >= a._list[(index-1)//2]

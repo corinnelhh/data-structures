@@ -3,10 +3,14 @@
 
 
 class BinaryHeap(object):
-    def __init__(self, max_heap=1, *data):
+    def __init__(self, max_heap="max", *data):
         self._list = []
         self._size = 0
-        self.max_heap = max_heap
+        self.max_heap = True
+        if max_heap == "min":
+            self.max_heap = False
+        elif max_heap != "max" and max_heap is not None:
+            self.push(max_heap)
         if data:
             for i in data:
                 self.push(i)
