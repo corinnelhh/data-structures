@@ -72,6 +72,8 @@ def test_delete_non_edge(initialize_graph):
 
 def test_delete_node(initialize_graph):
     a, b, c, g = initialize_graph
+    g.add_edge(a, b)
+    g.add_edge(b, c)
 
     g.delete_node(b)
 
