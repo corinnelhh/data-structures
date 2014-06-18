@@ -40,10 +40,9 @@ class Graph(object):
     def delete_node(self, n):
         if n not in self._nodes:
             raise IndexError
-        tmp_edges = self._edges.copy()
-        for key in tmp_edges.iterkeys():
-            if (key[0] == n) or (key[1] == n):
-                self.delete_edge(key[0], key[1])
+        for key1, key2 in self._edges.copy():
+            if (key1 == n) or (key2 == n):
+                self.delete_edge(key1, key2)
         self._nodes.remove(n)
 
     def has_node(self, n):
