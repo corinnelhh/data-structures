@@ -1,6 +1,8 @@
 data-structures
 ===============
 
+[![Build Status](https://travis-ci.org/corinnelhh/data-structures.svg?branch=master)](https://travis-ci.org/corinnelhh/data-structures)
+
 ##Types of data structures in this repository
 
     - Singly-linked list
