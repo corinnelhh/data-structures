@@ -2,6 +2,7 @@ class Node(object):
 
     def __init__(self, data):
         self._data = data
+        self._visited = False
 
 
 class Graph(object):
@@ -62,16 +63,62 @@ class Graph(object):
             raise IndexError
         return self.has_edge(n1, n2)
 
+    def df_traversal(self, n, df):
+        if not self.has_node(n):
+            raise IndexError
+        if not n._visited:
+            n._visited = True
+            df.append(n)
+            neighbors = self.has_neighbors(n)
+            for i in neighbors:
+                self.df_traversal(i, df)
+
+    def bf_traversal(self, n):
+        if not self.has_node(n):
+            raise IndexError
+        bf = [n]
+        n._visited = True
+        for i in bf:
+            for child in self.has_neighbors(i):
+                if not child._visited:
+                    bf.append(child)
+                    child._visited = True
+        return bf
+
+    def visit_reset(self):
+        for i in self._nodes:
+            i._visited = False
+
 
 if __name__ == '__main__':
+    import random
     g = Graph()
-    a = g.add_node("a")
-    b = g.add_node("b")
-    g.add_edge(a, b)
-    for node in g._nodes:
-        print node._data
-    g.delete_node(b)
-    for node in g._nodes:
-        print node._data
-    #for key, value in g._edges.iteritems():
-      #  print key[0]._data, key[1]._data, value
+    for i in range(10):
+        a = random.randint(10,99)
+        g.add_node(a)
+
+    for i in range(40):
+        a = random.randint(0,9)
+        b = random.randint(0,9)
+        g.add_edge(g._nodes[a], g._nodes[b])
+
+    for i in g._nodes:
+        result = "Node "+str(i._data)+": | "
+        for x in g.has_neighbors(i):
+            result += str(x._data)+" | "
+        print result
+
+    df = []
+    g.df_traversal(g._nodes[0] ,df)
+    result = "\nDepth First Search: \n\t"
+    for i in df:
+        result += str(i._data) +" | "
+    g.visit_reset()
+
+    print result + "\n"
+    bf = g.bf_traversal(g._nodes[0])
+    result = "\nBreadth First Search: \n\t"
+    for i in bf:
+        result += str(i._data) +" | "
+    print result + "\n"
+    g.visit_reset()
