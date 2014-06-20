@@ -120,3 +120,12 @@ def test_adjacent(initialize_graph):
 
     assert g.adjacent(a, c)
     assert g.adjacent(a, e) is False
+
+def test_depth(initialize_graph):
+    a, b, c, g = initialize_graph
+    d = g.add_node("d")
+    g.add_edge(a, b)
+    g.add_edge(b, d)
+    g.add_edge(a, d)
+    g.add_edge(b, c)
+    assert g.df_traversal(a) == [a, b, c, d]

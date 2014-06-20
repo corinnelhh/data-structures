@@ -2,6 +2,7 @@ class Node(object):
 
     def __init__(self, data):
         self._data = data
+        self._visited = False
 
 
 class Graph(object):
@@ -61,6 +62,17 @@ class Graph(object):
         if not self.has_node(n1) or not self.has_node(n2):
             raise IndexError
         return self.has_edge(n1, n2)
+
+    def df_traversal(self, n):
+        if not n_.visited
+            n._visited = True
+            neighbors = self.has_neighbors(n)
+            for i in neighbors:
+                return [append(depth_first_traversal(neighbor[i]))]
+
+
+    def bf_traversal(self, n):
+        return [n]
 
 
 if __name__ == '__main__':
