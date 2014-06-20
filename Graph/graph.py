@@ -63,12 +63,13 @@ class Graph(object):
             raise IndexError
         return self.has_edge(n1, n2)
 
-    def df_traversal(self, n):
-        if not n_.visited
+    def df_traversal(self, n, df):
+        if not n._visited:
             n._visited = True
+            df.append(n)
             neighbors = self.has_neighbors(n)
             for i in neighbors:
-                return [append(depth_first_traversal(neighbor[i]))]
+                self.df_traversal(i,df)
 
 
     def bf_traversal(self, n):
@@ -79,11 +80,22 @@ if __name__ == '__main__':
     g = Graph()
     a = g.add_node("a")
     b = g.add_node("b")
+    c = g.add_node("c")
+    d = g.add_node("d")
+    e = g.add_node("e")
     g.add_edge(a, b)
-    for node in g._nodes:
-        print node._data
-    g.delete_node(b)
-    for node in g._nodes:
-        print node._data
-    #for key, value in g._edges.iteritems():
-      #  print key[0]._data, key[1]._data, value
+    g.add_edge(a, c)
+    g.add_edge(a, d)
+    g.add_edge(a, e)
+    g.add_edge(b, c)
+    g.add_edge(b, d)
+    g.add_edge(b, e)
+    g.add_edge(c, d)
+    g.add_edge(c, e)
+    g.add_edge(d, e)
+
+    df = []
+    print str(g.df_traversal(d,df))
+    for i in df:
+        print i._data
+
