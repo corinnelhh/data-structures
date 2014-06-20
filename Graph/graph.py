@@ -122,31 +122,3 @@ if __name__ == '__main__':
         result += str(i._data) +" | "
     print result + "\n"
     g.visit_reset()
-'''
-    g = Graph()
-    a = g.add_node("a")
-    b = g.add_node("b")
-    c = g.add_node("c")
-    d = g.add_node("d")
-    e = g.add_node("e")
-    g.add_edge(a, b)
-    g.add_edge(a, c)
-    g.add_edge(a, d)
-    g.add_edge(a, e)
-    g.add_edge(b, c)
-    g.add_edge(b, d)
-    g.add_edge(b, e)
-    g.add_edge(c, d)
-    g.add_edge(c, e)
-    g.add_edge(d, e)
-
-    df = []
-    for i in df:
-        print i._data
-    g.visit_reset()
-
-    print "\n"
-    bf = g.bf_traversal(a)
-    for i in bf:
-        print i._data
-'''
