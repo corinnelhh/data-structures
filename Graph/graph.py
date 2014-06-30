@@ -19,24 +19,21 @@ class Graph(object):
         return a
 
     def has_edge(self, n1, n2):
-        return ((n1, n2) in self._edges) or ((n2, n1) in self._edges)
+        return (n1, n2) in self._edges
 
-    def add_edge(self, n1, n2, w=1):
+    def add_edge(self, n1, n2, w1=None):
         if not self.has_edge(n1, n2):
             if n1 not in self._nodes:
                 self._nodes.append(n1)
             if n2 not in self._nodes:
                 self._nodes.append(n2)
-            self._edges[(n1, n2)] = w
+            self._edges[(n1, n2)] = w1
 
     def delete_edge(self, n1, n2):
         try:
             self._edges.pop((n1, n2))
         except(KeyError):
-            try:
-                self._edges.pop((n2, n1))
-            except(KeyError):
-                raise KeyError
+            raise KeyError
 
     def delete_node(self, n):
         if n not in self._nodes:
@@ -44,6 +41,8 @@ class Graph(object):
         for i in self._nodes:
             if self.has_edge(n, i):
                 self.delete_edge(n, i)
+            elif self.has_edge(i, n):
+                self.delete_edge(i, n)
         self._nodes.remove(n)
 
     def has_node(self, n):
@@ -84,6 +83,12 @@ class Graph(object):
                     bf.append(child)
                     child._visited = True
         return bf
+
+    # def find_shortest_path(self, n1, n2):
+    #     if (not self.has_node(n1)) or (not self.has_node(n2)):
+    #         raise IndexError
+    #     pass
+
 
     def visit_reset(self):
         for i in self._nodes:
