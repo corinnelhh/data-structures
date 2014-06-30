@@ -84,28 +84,11 @@ class Graph(object):
                     child._visited = True
         return bf
 
-    # def _df_with_weight(self, n1, n2, df):
-    #     if not n._visited:
-    #         n._visited = True
-    #         df.append(n)
-    #         neighbors = self.has_neighbors(n)
-    #         for i in neighbors:
-    #             self.df_traversal(i, n2 df)
-
     # def find_shortest_path(self, n1, n2):
     #     if (not self.has_node(n1)) or (not self.has_node(n2)):
     #         raise IndexError
-    #     min_list = []
-    #     df = []
-    #     min_weight = 0
-    #     try:
-    #         path_weight = self._df_with_weight(n1, n2, df)
-    #         if path_weight > min_weight:
-    #             continue
-    #         min_list, df = df, min_list
-    #         min_weight = path_weight
-    #     except IndexError:
-    #         print u"There is no path between these points"
+    #     pass
+
 
     def visit_reset(self):
         for i in self._nodes:
@@ -116,31 +99,31 @@ if __name__ == '__main__':
     import random
     g = Graph()
     for i in range(10):
-        a = random.randint(10, 99)
+        a = random.randint(10,99)
         g.add_node(a)
 
     for i in range(40):
-        a = random.randint(0, 9)
-        b = random.randint(0, 9)
+        a = random.randint(0,9)
+        b = random.randint(0,9)
         g.add_edge(g._nodes[a], g._nodes[b])
 
     for i in g._nodes:
-        result = "Node " + str(i._data) + ": | "
+        result = "Node "+str(i._data)+": | "
         for x in g.has_neighbors(i):
-            result += str(x._data) + " | "
+            result += str(x._data)+" | "
         print result
 
     df = []
-    g.df_traversal(g._nodes[0], df)
+    g.df_traversal(g._nodes[0] ,df)
     result = "\nDepth First Search: \n\t"
     for i in df:
-        result += str(i._data) + " | "
+        result += str(i._data) +" | "
     g.visit_reset()
 
     print result + "\n"
     bf = g.bf_traversal(g._nodes[0])
     result = "\nBreadth First Search: \n\t"
     for i in bf:
-        result += str(i._data) + " | "
+        result += str(i._data) +" | "
     print result + "\n"
     g.visit_reset()

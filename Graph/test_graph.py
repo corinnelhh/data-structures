@@ -44,15 +44,19 @@ def test_add_edge(initialize_graph):
     a, b, c, g = initialize_graph
     g.add_edge(a, b)
     assert (a, b) in g._edges
-
-    g.add_edge(b, a)
     assert (b, a) not in g._edges
 
+    g.add_edge(b, a)
+    assert (b, a) in g._edges
 
-def test_has_edges_2(initialize_graph):
+
+def test_edge_has_weight(initialize_graph):
     a, b, c, g = initialize_graph
-    g.add_edge(a, b)
-    assert g.has_edge(b, a)
+    g.add_edge(a, b, 3)
+    g.add_edge(b, a, 1)
+
+    assert g._edges[a, b] == 3
+    assert g._edges[a, b] != g._edges[b, a]
 
 
 def test_delete_edge(initialize_graph):
