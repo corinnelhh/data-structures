@@ -3,6 +3,8 @@ class Node(object):
     def __init__(self, data):
         self._data = data
         self._visited = False
+        self._distance = float("inf")
+        self._path = []
 
 
 class Graph(object):
@@ -84,13 +86,28 @@ class Graph(object):
                     child._visited = True
         return bf
 
-    # def _df_with_weight(self, n1, n2, df):
-    #     if not n._visited:
-    #         n._visited = True
-    #         df.append(n)
-    #         neighbors = self.has_neighbors(n)
-    #         for i in neighbors:
-    #             self.df_traversal(i, n2 df)
+    def shortest_path_Dijkstra(self, n1, n2):
+        if (not self.has_node(n1)) or (not self.has_node(n2)):
+             raise IndexError
+        if n1._distance is float("inf"):
+            n1._distance = 0
+            shortest_path = [n1]
+            s_path_weight = float("inf")
+        neighbors = n1.has_neighbors()
+        for neighbor in neighbors:
+            if not neighbor._visited:
+                neighbor._visited = True
+                path = self._edges[n1, neighbor] + n1._distance
+                if path < neighbor._distance:
+                    neighbor._distance = path
+                if neighbor._distance < s_path_weight:
+                    s_path_weight = neighbor._distance
+                    neighbor._path.append(n1)
+                if neighbor is n2:
+
+
+
+
 
     # def find_shortest_path(self, n1, n2):
     #     if (not self.has_node(n1)) or (not self.has_node(n2)):
@@ -110,6 +127,7 @@ class Graph(object):
     def visit_reset(self):
         for i in self._nodes:
             i._visited = False
+            i._distance = None
 
 
 if __name__ == '__main__':
