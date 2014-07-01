@@ -189,3 +189,26 @@ def test_breadth_cyclic(initialize_graph):
     g.add_edge(c, d)
     bf = g.bf_traversal(a)
     assert bf == [a, b, d, c]
+
+
+def test_dijkstra():
+    g = Graph()
+    a = g.add_node("a")
+    b = g.add_node("b")
+    c = g.add_node("c")
+    d = g.add_node("d")
+    e = g.add_node("e")
+    f = g.add_node("f")
+    g.add_edge(a, b, 1)
+    g.add_edge(b, d, 1)
+    g.add_edge(d, f, 1)
+    g.add_edge(f, e, 1)
+    g.add_edge(a, c, 3)
+    g.add_edge(c, e, 5)
+    g.add_edge(a, f, 5)
+    g.add_edge(b, c, 4)
+    g.add_edge(b, e, 9)
+    g.add_edge(c, d, 2)
+    g.add_edge(c, b, 2)
+    result = g._Dijkstra(a, e)
+    assert result == [a, b, d, f, e]

@@ -109,7 +109,7 @@ class Graph(object):
         path_list = []
         tmp_node = end
         while tmp_node:
-            path_list.append(tmp_node._data)
+            path_list.append(tmp_node)
             tmp_node = v_nodes[tmp_node][1]
         return path_list[::-1]
 
