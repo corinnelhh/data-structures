@@ -84,63 +84,109 @@ class Graph(object):
                     child._visited = True
         return bf
 
-    # def _df_with_weight(self, n1, n2, df):
-    #     if not n._visited:
-    #         n._visited = True
-    #         df.append(n)
-    #         neighbors = self.has_neighbors(n)
-    #         for i in neighbors:
-    #             self.df_traversal(i, n2 df)
+    def _Dijkstra(self, start, end):
+        if (not self.has_node(start)) or (not self.has_node(end)):
+            raise IndexError
+        v_nodes = {start: (0, None)}
+        base = start
+        while base != end:
+            neighbors = self.has_neighbors(base)
+            first_neighbor = True
+            for neighbor in neighbors:
+                new_weight = self._edges[base, neighbor] + v_nodes[base][0]
+                if (neighbor in v_nodes) and (new_weight > v_nodes[neighbor][0]):
+                    print "do nothing"
+                else:
+                    v_nodes[neighbor] = (new_weight, base)
+                if first_neighbor:
+                    first_neighbor = False
+                    smallest = (v_nodes[neighbor][0], neighbor)
+                elif smallest[0] > v_nodes[neighbor][0]:
+                    smallest = (v_nodes[neighbor][0], neighbor)
+            base = smallest[1]
+            print smallest[0]
+        path_list = []
+        tmp_node = end
+        while tmp_node:
+            path_list.append(tmp_node)
+            tmp_node = v_nodes[tmp_node][1]
+        return path_list[::-1]
 
-    # def find_shortest_path(self, n1, n2):
-    #     if (not self.has_node(n1)) or (not self.has_node(n2)):
-    #         raise IndexError
-    #     min_list = []
-    #     df = []
-    #     min_weight = 0
-    #     try:
-    #         path_weight = self._df_with_weight(n1, n2, df)
-    #         if path_weight > min_weight:
-    #             continue
-    #         min_list, df = df, min_list
-    #         min_weight = path_weight
-    #     except IndexError:
-    #         print u"There is no path between these points"
+    def _Floyd_Warshall(self, start, end):
+        if (not self.has_node(start)) or (not self.has_node(end)):
+            raise IndexError
+        dist_ = {}
+        next_ = {}
+        for i in self._nodes:
+            for j in self._nodes:
+                dist_[(i, j)] = float("inf")
+                next_[(i, j)] = None
+        for i in self._edges:
+            dist_[i] = self._edges[i]
+            next_[i] = i[1]
+        for k in self._nodes:
+            for i in self._nodes:
+                for j in self._nodes:
+                    if dist_[(i, k)] + dist_[(k, j)] < dist_[(i, j)]:
+                        dist_[(i, j)] = dist_[(i, k)] + dist_[(k, j)]
+                        next_[(i, j)] = next_[(i, k)]
+        if next_[(start, end)] is None:
+            return []
+        path = [start]
+        while start is not end:
+            start = next_[(start, end)]
+            path.append(start)
+        return path
+
 
     def visit_reset(self):
         for i in self._nodes:
             i._visited = False
 
-
 if __name__ == '__main__':
-    import random
+   # import random
     g = Graph()
-    for i in range(10):
-        a = random.randint(10, 99)
-        g.add_node(a)
+    a = g.add_node("a")
+    b = g.add_node("b")
+    c = g.add_node("c")
+    d = g.add_node("d")
 
-    for i in range(40):
-        a = random.randint(0, 9)
-        b = random.randint(0, 9)
-        g.add_edge(g._nodes[a], g._nodes[b])
+    g.add_edge(a, b, 1)
+    g.add_edge(b, c, 2)
+    g.add_edge(a, c, 8)
+    g.add_edge(c, d, 1)
 
-    for i in g._nodes:
-        result = "Node " + str(i._data) + ": | "
-        for x in g.has_neighbors(i):
-            result += str(x._data) + " | "
-        print result
+    print g._Dijkstra(a, c)
 
-    df = []
-    g.df_traversal(g._nodes[0], df)
-    result = "\nDepth First Search: \n\t"
-    for i in df:
-        result += str(i._data) + " | "
-    g.visit_reset()
+    # for i in range(10):
+    #     a = random.randint(10, 99)
+    #     g.add_node(a)
 
-    print result + "\n"
-    bf = g.bf_traversal(g._nodes[0])
-    result = "\nBreadth First Search: \n\t"
-    for i in bf:
-        result += str(i._data) + " | "
-    print result + "\n"
-    g.visit_reset()
+
+#     for i in range(40):
+#         a = random.randint(0, 9)
+#         b = random.randint(0, 9)
+#         g.add_edge(g._nodes[a], g._nodes[b])
+
+
+
+    # for i in g._nodes:
+    #     result = "Node " + str(i._data) + ": | "
+    #     for x in g.has_neighbors(i):
+    #         result += str(x._data) + " | "
+    #     print result
+
+    # df = []
+    # g.df_traversal(g._nodes[0], df)
+    # result = "\nDepth First Search: \n\t"
+    # for i in df:
+    #     result += str(i._data) + " | "
+    # g.visit_reset()
+
+    # print result + "\n"
+    # bf = g.bf_traversal(g._nodes[0])
+    # result = "\nBreadth First Search: \n\t"
+    # for i in bf:
+    #     result += str(i._data) + " | "
+    # print result + "\n"
+    # g.visit_reset()
