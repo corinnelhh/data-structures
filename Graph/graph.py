@@ -3,6 +3,8 @@ class Node(object):
     def __init__(self, data):
         self._data = data
         self._visited = False
+        self._length = None
+        self._path = None
 
 
 class Graph(object):
@@ -19,15 +21,38 @@ class Graph(object):
         return a
 
     def has_edge(self, n1, n2):
-        return ((n1, n2) in self._edges) or ((n2, n1) in self._edges)
+        return False if self.get_edge(n1, n2) is None else True
 
-    def add_edge(self, n1, n2, w=1):
-        if not self.has_edge(n1, n2):
+    def get_edge(self, n1, n2):
+        if (n1, n2) in self._edges:
+            return (n1, n2)
+        elif (n2, n1) in self._edges:
+            return (n2, n1)
+        else:
+            return None
+
+    def add_edge(self, n1, n2, w = 1):
+        edge = self.get_edge(n1, n2)
+        if edge is None:
             if n1 not in self._nodes:
                 self._nodes.append(n1)
             if n2 not in self._nodes:
                 self._nodes.append(n2)
-            self._edges[(n1, n2)] = w
+            self._edges[(n1, n2)] = [w, None]
+        else:
+            if edge[0] is n1:
+                self._edges[edge][0] = w
+            else:
+                self._edges[edge][1] = w
+
+    def get_weight(self, n1, n2):
+        edge = self.get_edge(n1, n2)
+        if edge is None:
+            raise KeyError
+        if edge[0] is n1:
+            return self._edges[edge][0]
+        else:
+            return self._edges[edge][1]
 
     def delete_edge(self, n1, n2):
         try:
@@ -85,9 +110,39 @@ class Graph(object):
                     child._visited = True
         return bf
 
+    def dijkstra(self, x, y):
+        x._length = 0
+        self.forward(x, self.has_neighbors(x))
+        res = []
+        while True:
+            res.append(y)
+            y = y._path
+            if y is None:
+                break
+        self.visit_reset()
+        return res[::-1]
+
+    def forward(self, n, neighbors):
+        if not n._visited:
+            n._visited = True
+            for i in neighbors:
+                if self.get_weight(n, i) is not None:
+                    temp = self.get_weight(n, i) + n._length
+                    if i._length is None:
+                        i._length = temp
+                        i._path = n
+                    else:
+                        if i._length > temp:
+                            i._length = temp
+                            i._path = n
+            for i in neighbors:
+                self.forward(i, self.has_neighbors(i))
+
+
     def visit_reset(self):
         for i in self._nodes:
             i._visited = False
+            i._length = None
 
 
 if __name__ == '__main__':
