@@ -88,7 +88,6 @@ class Graph(object):
         if (not self.has_node(start)) or (not self.has_node(end)):
             raise IndexError
         v_nodes = {start: (0, None)}
-
         base = start
         while base != end:
             neighbors = self.has_neighbors(base)
@@ -113,11 +112,43 @@ class Graph(object):
             tmp_node = v_nodes[tmp_node][1]
         return path_list[::-1]
 
+    def _Floyd_Warshall(self, start, end):
+        if (not self.has_node(start)) or (not self.has_node(end)):
+            raise IndexError
+        dist_ = {}
+        next_ = {}
+        for i in self._nodes:
+            for j in self._nodes:
+                dist_[(i, j)] = float("inf")
+
+
+
+procedure FloydWarshallWithPathReconstruction ()
+   for each edge (u,v)
+      dist[u][v] ← w(u,v)  // the weight of the edge (u,v)
+      next[u][v] ← v
+   for k from 1 to |V| // standard Floyd-Warshall implementation
+      for i from 1 to |V|
+         for j from 1 to |V|
+            if dist[i][k] + dist[k][j] < dist[i][j] then
+               dist[i][j] ← dist[i][k] + dist[k][j]
+               next[i][j] ← next[i][k]
+
+procedure Path(u, v)
+   if next[u][v] = null then
+       return []
+   path = [u]
+   while u ≠ v
+       u ← next[u][v]
+       path.append(u)
+   return path
+
+
+
 
     def visit_reset(self):
         for i in self._nodes:
             i._visited = False
-
 
 if __name__ == '__main__':
    # import random
