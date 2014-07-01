@@ -190,6 +190,7 @@ def test_breadth_cyclic(initialize_graph):
     bf = g.bf_traversal(a)
     assert bf == [a, b, d, c]
 
+
 @pytest.fixture(scope="function")
 def populate_graph():
     g = Graph()
@@ -221,5 +222,5 @@ def test_dijkstra(populate_graph):
 
 def test_Floyd_Warshall(populate_graph):
     g, a, b, c, d, e, f = populate_graph
-    result = g._A_star(a, e)
+    result = g._Floyd_Warshall(a, e)
     assert result == [a, b, d, f, e]

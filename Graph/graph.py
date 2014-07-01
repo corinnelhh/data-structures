@@ -120,30 +120,23 @@ class Graph(object):
         for i in self._nodes:
             for j in self._nodes:
                 dist_[(i, j)] = float("inf")
-
-
-
-procedure FloydWarshallWithPathReconstruction ()
-   for each edge (u,v)
-      dist[u][v] ← w(u,v)  // the weight of the edge (u,v)
-      next[u][v] ← v
-   for k from 1 to |V| // standard Floyd-Warshall implementation
-      for i from 1 to |V|
-         for j from 1 to |V|
-            if dist[i][k] + dist[k][j] < dist[i][j] then
-               dist[i][j] ← dist[i][k] + dist[k][j]
-               next[i][j] ← next[i][k]
-
-procedure Path(u, v)
-   if next[u][v] = null then
-       return []
-   path = [u]
-   while u ≠ v
-       u ← next[u][v]
-       path.append(u)
-   return path
-
-
+                next_[(i, j)] = None
+        for i in self._edges:
+            dist_[i] = self._edges[i]
+            next_[i] = i[1]
+        for k in self._nodes:
+            for i in self._nodes:
+                for j in self._nodes:
+                    if dist_[(i, k)] + dist_[(k, j)] < dist_[(i, j)]:
+                        dist_[(i, j)] = dist_[(i, k)] + dist_[(k, j)]
+                        next_[(i, j)] = next_[(i, k)]
+        if next_[(start, end)] is None:
+            return []
+        path = [start]
+        while start is not end:
+            start = next_[(start, end)]
+            path.append(start)
+        return path
 
 
     def visit_reset(self):
