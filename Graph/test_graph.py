@@ -205,7 +205,8 @@ def test_dijkstra():
     g.add_edge(b, e, 9)
     g.add_edge(c, d, 2)
     g.add_edge(c, b, 2)
-    result = g.dijkstra(a, e)
+    # result = g.dijkstra(a, e)
+    result = g.floyd_warshall(a, e)
     for i in g._nodes:
         res = []
         for j in result:

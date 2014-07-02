@@ -112,7 +112,7 @@ class Graph(object):
 
     def dijkstra(self, x, y):
         x._length = 0
-        self.forward(x, self.has_neighbors(x))
+        self.tail_dijkstra(x, self.has_neighbors(x))
         res = []
         while True:
             res.append(y)
@@ -122,7 +122,7 @@ class Graph(object):
         self.visit_reset()
         return res[::-1]
 
-    def forward(self, n, neighbors):
+    def tail_dijkstra(self, n, neighbors):
         if not n._visited:
             n._visited = True
             for i in neighbors:
@@ -136,7 +136,35 @@ class Graph(object):
                             i._length = temp
                             i._path = n
             for i in neighbors:
-                self.forward(i, self.has_neighbors(i))
+                self.tail_dijkstra(i, self.has_neighbors(i))
+
+    def floyd_warshall(self, x, y):
+        dist = {}
+        nex = {}
+        for i in self._nodes:
+            for j in self._nodes:
+                dist[(i, j)] = float("inf")
+                nex[(i, j)] = None
+        for i in self._edges:
+            if self._edges[i][0] is not None:
+                dist[i] = self._edges[i][0]
+            if self._edges[i][1] is not None:
+                dist[(i[1], i[0])] = self._edges[i][1]
+            nex[i] = i[1]
+            nex[(i[1], i[0])] = i[0]
+        for k in self._nodes:
+            for i in self._nodes:
+                for j in self._nodes:
+                    if dist[(i, k)] + dist[(k, j)] < dist[(i, j)]:
+                        dist[(i, j)] = dist[(i, k)] + dist[(k, j)]
+                        nex[(i, j)] = nex[(i, k)]
+        if nex[(x, y)] is None:
+            return []
+        path = [x]
+        while x is not y:
+            x = nex[(x, y)]
+            path.append(x)
+        return path
 
 
     def visit_reset(self):
@@ -157,23 +185,29 @@ if __name__ == '__main__':
         b = random.randint(0,9)
         g.add_edge(g._nodes[a], g._nodes[b])
 
+    a = g._nodes[2]
+    b = g._nodes[6]
+    c = g.floyd_warshall(a, b)
+    for i in c:
+        print i._data
+
     for i in g._nodes:
         result = "Node "+str(i._data)+": | "
         for x in g.has_neighbors(i):
             result += str(x._data)+" | "
         print result
 
-    df = []
-    g.df_traversal(g._nodes[0] ,df)
-    result = "\nDepth First Search: \n\t"
-    for i in df:
-        result += str(i._data) +" | "
-    g.visit_reset()
+    # df = []
+    # g.df_traversal(g._nodes[0] ,df)
+    # result = "\nDepth First Search: \n\t"
+    # for i in df:
+    #     result += str(i._data) +" | "
+    # g.visit_reset()
 
-    print result + "\n"
-    bf = g.bf_traversal(g._nodes[0])
-    result = "\nBreadth First Search: \n\t"
-    for i in bf:
-        result += str(i._data) +" | "
-    print result + "\n"
-    g.visit_reset()
+    # print result + "\n"
+    # bf = g.bf_traversal(g._nodes[0])
+    # result = "\nBreadth First Search: \n\t"
+    # for i in bf:
+    #     result += str(i._data) +" | "
+    # print result + "\n"
+    # g.visit_reset()
