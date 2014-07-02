@@ -171,6 +171,7 @@ class Graph(object):
         for i in self._nodes:
             i._visited = False
             i._length = None
+            i._path = None
 
 
 if __name__ == '__main__':
