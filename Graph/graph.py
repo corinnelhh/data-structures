@@ -93,6 +93,8 @@ class Graph(object):
             neighbors = self.has_neighbors(base)
             first_neighbor = True
             for neighbor in neighbors:
+                if neighbor._visited:
+                    continue
                 new_weight = self._edges[base, neighbor] + v_nodes[base][0]
                 if (neighbor in v_nodes) and (new_weight > v_nodes[neighbor][0]):
                     print "do nothing"
@@ -103,12 +105,18 @@ class Graph(object):
                     smallest = (v_nodes[neighbor][0], neighbor)
                 elif smallest[0] > v_nodes[neighbor][0]:
                     smallest = (v_nodes[neighbor][0], neighbor)
-            base = smallest[1]
-            print smallest[0]
+            if first_neighbor:
+                if base == start:
+                    print u"There is no path between these two nodes"
+                    return []
+                base = v_nodes[smallest[1]][1]
+            else:
+                base = smallest[1]
+                smallest[1]._visited = True
         path_list = []
         tmp_node = end
         while tmp_node:
-            path_list.append(tmp_node)
+            path_list.append(tmp_node._data)
             tmp_node = v_nodes[tmp_node][1]
         return path_list[::-1]
 
