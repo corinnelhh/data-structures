@@ -2,6 +2,15 @@ import pytest
 from bst import BST
 
 
+@pytest.fixture(scope="function")
+def make_bst():
+    b = BST()
+    our_list = [4, 2, 6, 1, 3, 7, 5]
+    for num in our_list:
+        b.insert(num)
+    return b
+
+
 def test_insert():
     btree = BST()
     btree.insert(1)
@@ -49,3 +58,39 @@ def test_balanced():
     assert b.is_balanced(b._root) == -3
     assert b.is_balanced(b._root._left) == -3
     assert b.is_balanced(b._root._right) == -0
+
+
+def test_in_order(make_bst):
+    b = make_bst
+    a = [1, 2, 3, 4, 5, 6, 7]
+    count = 0
+    for i in b.in_order(b._root):
+        assert a[count] == i._data
+        count += 1
+
+
+def test_pre_order(make_bst):
+    b = make_bst
+    a = [4, 2, 1, 3, 6, 5, 7]
+    count = 0
+    for i in b.pre_order(b._root):
+        assert i._data == a[count]
+        count += 1
+
+
+def test_post_order(make_bst):
+    b = make_bst
+    a = [1, 3, 2, 5, 7, 6, 4]
+    count = 0
+    for i in b.post_order(b._root):
+        assert i._data == a[count]
+        count += 1
+
+
+def test_level_order(make_bst):
+    b = make_bst
+    a = [4, 2, 6, 1, 3, 5, 7]
+    count = 0
+    for i in b.level_order(b._root):
+        assert i._data == a[count]
+        count += 1

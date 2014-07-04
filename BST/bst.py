@@ -5,6 +5,7 @@ class Node(object):
         self._left = None
         self._right = None
         self._level = None
+        self._visited = False
 
 
 class BST(object):
@@ -77,19 +78,61 @@ class BST(object):
             self.lets_traverse(mynode._right)
         print mynode._data, self.is_balanced(mynode)
 
+    def in_order(self, node):
+        if node._left:
+            for i in self.in_order(node._left):
+                yield i
+        yield node
+        if node._right:
+            for i in self.in_order(node._right):
+                yield i
 
+    def pre_order(self, node):
+        yield node
+        if node._left:
+            for i in self.pre_order(node._left):
+                yield i
+        if node._right:
+            for i in self.pre_order(node._right):
+                yield i
 
+    def post_order(self, node):
+        if node._left:
+            for i in self.post_order(node._left):
+                yield i
+        if node._right:
+            for i in self.post_order(node._right):
+                yield i
+        yield node
+
+    def level_order(self, node):
+        q = []
+        q.insert(0, node)
+        while q:
+            node = q.pop()
+            yield node
+            if node._left:
+                q.insert(0, node._left)
+            if node._right:
+                q.insert(0, node._right)
 
 
 if __name__ == "__main__":
+    # b = BST()
+
+    # b.insert(10)
+    # b.insert(5)
+    # b.insert(15)
+    # b.insert(3)
+    # b.insert(2)
+    # b.insert(1)
+
+    # p = b._root
+    # b.lets_traverse(p)
+
     b = BST()
-
-    b.insert(10)
-    b.insert(5)
-    b.insert(15)
-    b.insert(3)
-    b.insert(2)
-    b.insert(1)
-
-    p = b._root
-    b.lets_traverse(p)
+    our_list = [4, 2, 6, 1, 3, 7, 5]
+    for num in our_list:
+        b.insert(num)
+    for num in b.level_order(b._root):
+        print num._data
