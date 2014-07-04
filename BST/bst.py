@@ -77,6 +77,15 @@ class BST(object):
             self.lets_traverse(mynode._right)
         print mynode._data, self.is_balanced(mynode)
 
+    def in_order(self, node):
+        if node._left:
+            for i in self.in_order(node._left):
+                yield i
+        yield node
+        if node._right:
+            for i in self.in_order(node._right):
+                yield i
+
     def pre_order(self, node):
         yield node
         if node._left:
