@@ -105,26 +105,34 @@ class BST(object):
                 yield i
         yield node
 
-    def level_order(self, node):
-        if node == self._root:
+    def level_order(self, node, level):
+        if node._level == level:
             yield node
         else:
-            for i in self.level_order(node):
-                yield node._left
-                yield node._right
-
-
+            if node._left:
+                for i in self.level_order(node._left, level + 1):
+                    yield i
+            if node._right:
+                for i in self.level_order(node._right, level + 1):
+                    yield i
 
 
 if __name__ == "__main__":
+    # b = BST()
+
+    # b.insert(10)
+    # b.insert(5)
+    # b.insert(15)
+    # b.insert(3)
+    # b.insert(2)
+    # b.insert(1)
+
+    # p = b._root
+    # b.lets_traverse(p)
+
     b = BST()
-
-    b.insert(10)
-    b.insert(5)
-    b.insert(15)
-    b.insert(3)
-    b.insert(2)
-    b.insert(1)
-
-    p = b._root
-    b.lets_traverse(p)
+    our_list = [4, 2, 6, 1, 3, 7, 5]
+    for num in our_list:
+        b.insert(num)
+    for num in b.level_order(b._root,1):
+        print num._data
