@@ -2,6 +2,15 @@ import pytest
 from bst import BST
 
 
+@pytest.fixture(scope="function")
+def make_bst():
+    b = BST()
+    our_list = [4, 2, 6, 1, 3, 7, 5]
+    for num in our_list:
+        b.insert(num)
+    return b
+
+
 def test_insert():
     btree = BST()
     btree.insert(1)
