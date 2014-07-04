@@ -77,7 +77,44 @@ class BST(object):
             self.lets_traverse(mynode._right)
         print mynode._data, self.is_balanced(mynode)
 
+    def pre_order(self, node):
+        yield node
+        if node._left:
+            for i in self.pre_order(node._left):
+                yield i
+        if node._right:
+            for i in self.pre_order(node._right):
+                yield i
 
+    def post_order(self, node):
+        if node._left:
+            for i in self.post_order(node._left):
+                yield i
+        if node._right:
+            for i in self.post_order(node._right):
+                yield i
+        yield node
+
+    def level_order(self, node):
+        if not node._visited:
+            node._visited = True
+            yield node
+        if node._left:
+            if not node._left._visited:
+                node._left._visited = True
+                yield node._left
+        if node._right:
+            if not node._right._visited:
+                node._right._visited = True
+                yield node._right
+        for i in self.level_order(node._left):
+            if not i._visited:
+                i._visited = True
+                yield i
+        for i in self.level_order(node._right):
+            if not i._visited:
+                i._visited = True
+                yield i
 
 
 
