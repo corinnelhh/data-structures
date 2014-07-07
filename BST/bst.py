@@ -51,8 +51,10 @@ class BST(object):
         tmp_parent = None
         while True:
             if val < tmp._data:
+                tmp_parent = tmp
                 tmp = tmp._left
             elif val > tmp._data:
+                tmp_parent = tmp
                 tmp = tmp._right
             else:
                 if val != tmp._data:
@@ -60,13 +62,12 @@ class BST(object):
                     return None, None
                 else:
                     return tmp, tmp_parent
-            tmp_parent = tmp
 
     def delete_node(self, val):
         my_node, my_parent = self._find_node(val)
         if not my_node and not my_parent:
             return
-
+        print my_node._data, my_parent._data
         if my_node._left and my_node._right:
             my_tmp = my_node._right
             if my_tmp._left:
@@ -215,5 +216,6 @@ if __name__ == "__main__":
     our_list = [4, 2, 6, 1, 3, 7, 5]
     for num in our_list:
         b.insert(num)
-    for num in b.level_order(b._root):
+    for num in b.in_order(b._root):
         print num._data
+    b.delete_node(5)
