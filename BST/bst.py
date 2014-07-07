@@ -5,7 +5,6 @@ class Node(object):
         self._left = None
         self._right = None
         self._level = None
-        self._visited = False
 
 
 class BST(object):
