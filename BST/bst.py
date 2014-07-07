@@ -5,7 +5,6 @@ class Node(object):
         self._left = None
         self._right = None
         self._level = None
-        self._visited = False
 
 
 class BST(object):
@@ -46,6 +45,53 @@ class BST(object):
                     else:
                         parent = parent._right
         self._size += 1
+
+    def _find_node(self, val):
+        tmp = self._root
+        tmp_parent = None
+        while True:
+            if val < tmp._data:
+                tmp_parent = tmp
+                tmp = tmp._left
+            elif val > tmp._data:
+                tmp_parent = tmp
+                tmp = tmp._right
+            else:
+                return tmp, tmp_parent
+            if tmp is None:
+                raise IndexError
+
+    def delete_node(self, val):
+        my_node, my_parent = self._find_node(val)
+        if my_node._left and my_node._right:
+            my_tmp = my_node._right
+            if my_tmp._left:
+                while my_tmp._left._left:
+                    my_tmp = my_tmp._left
+                my_node._data = my_tmp._left._data
+                if my_tmp._left._right:
+                    my_tmp._left = my_tmp._left._right
+                else:
+                    my_tmp._left = None
+            else:
+                #if i have only right child and it doesn't have any children
+                my_tmp._left = my_node._left
+                if self._root == my_node:
+                    self._root = my_tmp
+                else:
+                    my_parent._left = my_tmp
+        else:
+            del_node = None
+            if not my_node._left and not my_node._right:
+                del_node = None
+            elif not my_node._right:
+                del_node = my_node._left
+            else:
+                del_node = my_node._right
+            if my_parent._left == my_node:
+                my_parent._left = del_node
+            else:
+                my_parent._right = del_node
 
     def contains(self, val):
         parent = self._root
@@ -105,49 +151,51 @@ class BST(object):
                 yield i
         yield node
 
-
     def level_order(self, node):
-        if node == self._root :
-            yield node
-        if node._left:
-            yield node._left
-        if node._right:
-            yield node._right
-        if node._left:
-            try:
-                my_generator = self.level_order(node._left)
-                my_node = next(my_generator)
-                yield my_node
-            except:
-                pass
-            try:
-                my_node = next(my_generator)
-                yield my_node
-            except:
-                pass
-        if node._right:
-            try:
-                my_generator = self.level_order(node._right)
-                my_node = next(my_generator)
-                yield my_node
-            except:
-                pass
-            try:
-                my_node = next(my_generator)
-                yield my_node
-            except:
-                pass
-
-
-        # q = []
-        # q.insert(0, node)
-        # while q:
-        #     node = q.pop()
+        # if node == self._root :
         #     yield node
         #     if node._left:
         #         q.insert(0, node._left)
         #     if node._right:
-        #         q.insert(0, node._right)
+        #         q.insert(0, gnode._right)
+        # if node._left:
+        #     yield node._left
+        # if node._right:
+        #     yield node._right
+        # if node._left:
+        #     try:
+        #         my_generator = self.level_order(node._left)
+        #         my_node = next(my_generator)
+        #         yield my_node
+        #     except:
+        #         pass
+        #     try:
+        #         my_node = next(my_generator)
+        #         yield my_node
+        #     except:
+        #         pass
+        # if node._right:
+        #     try:
+        #         my_generator = self.level_order(node._right)
+        #         my_node = next(my_generator)
+        #         yield my_node
+        #     except:
+        #         pass
+        #     try:
+        #         my_node = next(my_generator)
+        #         yield my_node
+        #     except:
+        #         pass
+
+        q = []
+        q.insert(0, node)
+        while q:
+            node = q.pop()
+            yield node
+            if node._left:
+                q.insert(0, node._left)
+            if node._right:
+                q.insert(0, node._right)
 
 
 if __name__ == "__main__":
@@ -167,5 +215,6 @@ if __name__ == "__main__":
     our_list = [4, 2, 6, 1, 3, 7, 5]
     for num in our_list:
         b.insert(num)
-    for num in b.level_order(b._root):
+    for num in b.in_order(b._root):
         print num._data
+    b.delete_node(5)

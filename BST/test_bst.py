@@ -1,4 +1,5 @@
 import pytest
+
 from bst import BST
 
 
@@ -31,6 +32,49 @@ def test_insert():
     btree.insert(2)
     assert btree._depth == 3
     assert btree._root._right._left._data == 2
+
+
+def test_delete(make_bst):
+    b = make_bst
+    b.delete_node(5)
+    a = []
+    for i in b.in_order(b._root):
+        a.append(i._data)
+    assert a == [1, 2, 3, 4, 6, 7]
+    b.delete_node(2)
+    a = []
+    for i in b.in_order(b._root):
+        a.append(i._data)
+    assert a == [1, 3, 4, 6, 7]
+    assert b._root._data == 4
+    b.delete_node(4)
+    a = []
+    for i in b.in_order(b._root):
+        a.append(i._data)
+    assert a == [1, 3, 6, 7]
+    assert b._root._data == 6
+    b.delete_node(1)
+    a = []
+    for i in b.in_order(b._root):
+        a.append(i._data)
+    assert a == [3, 6, 7]
+    assert b._root._data == 6
+    with pytest.raises(IndexError):
+        b.delete_node(5)
+
+
+def test_delete_2():
+    b = BST()
+    a = [17, 31, 9, 4, 2, 7, 18, 1, 13, 55, 8, 16, 21, 32]
+    for el in a:
+        b.insert(el)
+    assert b._root._data == a[0]
+    b.delete_node(a[4])
+    a.pop(4)
+    tester = []
+    for i in b.in_order(b._root):
+        tester.append(i._data)
+    assert tester == sorted(a)
 
 
 def test_contains():
