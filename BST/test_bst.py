@@ -45,11 +45,13 @@ def test_delete(make_bst):
     for i in b.in_order(b._root):
         a.append(i._data)
     assert a == [1, 3, 4, 6, 7]
+    assert b._root._data == 4
     b.delete_node(4)
     a = []
     for i in b.in_order(b._root):
         a.append(i._data)
     assert a == [1, 3, 6, 7]
+    assert b._root._data == 6
     b.delete_node(1)
     a = []
     for i in b.in_order(b._root):

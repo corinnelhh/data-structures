@@ -67,7 +67,6 @@ class BST(object):
         my_node, my_parent = self._find_node(val)
         if not my_node and not my_parent:
             return
-        print my_node._data, my_parent._data
         if my_node._left and my_node._right:
             my_tmp = my_node._right
             if my_tmp._left:
@@ -80,7 +79,11 @@ class BST(object):
                     my_tmp._left = None
             else:
                 #if i have only right child and it doesn't have any children
-                my_parent._right = my_tmp
+                my_tmp._left = my_node._left
+                if self._root == my_node:
+                    self._root = my_tmp
+                else:
+                    my_parent._left = my_tmp
         else:
             del_node = None
             if not my_node._left and not my_node._right:
