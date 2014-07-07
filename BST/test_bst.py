@@ -33,6 +33,15 @@ def test_insert():
     assert btree._root._right._left._data == 2
 
 
+def test_delete(make_bst):
+    b = make_bst
+    b.delete(5)
+    a = []
+    for i in b.in_order(b._root):
+        a.append(i)
+    assert a == [1, 2, 3, 4, 6, 7]
+
+
 def test_contains():
     btree = BST()
     btree.insert(3)
