@@ -35,22 +35,22 @@ def test_insert():
 
 def test_delete(make_bst):
     b = make_bst
-    b.delete(5)
+    b.delete_node(5)
     a = []
     for i in b.in_order(b._root):
         a.append(i)
     assert a == [1, 2, 3, 4, 6, 7]
-    b.delete(2)
+    b.delete_node(2)
     a = []
     for i in b.in_order(b._root):
         a.append(i)
     assert a == [1, 3, 4, 6, 7]
-    b.delete(4)
+    b.delete_node(4)
     a = []
     for i in b.in_order(b._root):
         a.append(i)
     assert a == [1, 3, 6, 7]
-    b.delete(1)
+    b.delete_node(1)
     a = []
     for i in b.in_order(b._root):
         a.append(i)
