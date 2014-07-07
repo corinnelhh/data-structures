@@ -106,6 +106,41 @@ class BST(object):
         yield node
 
     def level_order(self, node):
+        # if node == self._root :
+        #     yield node
+        #     if node._left:
+        #         q.insert(0, node._left)
+        #     if node._right:
+        #         q.insert(0, gnode._right)
+        # if node._left:
+        #     yield node._left
+        # if node._right:
+        #     yield node._right
+        # if node._left:
+        #     try:
+        #         my_generator = self.level_order(node._left)
+        #         my_node = next(my_generator)
+        #         yield my_node
+        #     except:
+        #         pass
+        #     try :
+        #         my_node = next(my_generator)
+        #         yield my_node
+        #     except:
+        #         pass
+        # if node._right:
+        #     try :
+        #         my_generator = self.level_order(node._right)
+        #         my_node = next(my_generator)
+        #         yield my_node
+        #     except:
+        #         pass
+        #     try:
+        #         my_node = next(my_generator)
+        #         yield my_node
+        #     except:
+        #         pass
+
         q = []
         q.insert(0, node)
         while q:
@@ -114,7 +149,7 @@ class BST(object):
             if node._left:
                 q.insert(0, node._left)
             if node._right:
-                q.insert(0, gnode._right)
+                q.insert(0, node._right)
 
 
 if __name__ == "__main__":
