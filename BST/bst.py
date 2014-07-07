@@ -169,13 +169,13 @@ class BST(object):
         #         yield my_node
         #     except:
         #         pass
-        #     try :
+        #     try:
         #         my_node = next(my_generator)
         #         yield my_node
         #     except:
         #         pass
         # if node._right:
-        #     try :
+        #     try:
         #         my_generator = self.level_order(node._right)
         #         my_node = next(my_generator)
         #         yield my_node

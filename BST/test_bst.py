@@ -1,6 +1,5 @@
 import pytest
 
-import random
 from bst import BST
 
 
