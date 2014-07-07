@@ -57,16 +57,12 @@ class BST(object):
                 tmp_parent = tmp
                 tmp = tmp._right
             else:
-                if val != tmp._data:
-                    print u"Value is not in Tree"
-                    return None, None
-                else:
-                    return tmp, tmp_parent
+                return tmp, tmp_parent
+            if tmp is None:
+                raise IndexError
 
     def delete_node(self, val):
         my_node, my_parent = self._find_node(val)
-        if not my_node and not my_parent:
-            return
         if my_node._left and my_node._right:
             my_tmp = my_node._right
             if my_tmp._left:
@@ -91,7 +87,7 @@ class BST(object):
             elif not my_node._right:
                 del_node = my_node._left
             else:
-                del_node = my_node.right
+                del_node = my_node._right
             if my_parent._left == my_node:
                 my_parent._left = del_node
             else:

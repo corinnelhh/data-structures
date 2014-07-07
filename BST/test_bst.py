@@ -1,4 +1,6 @@
 import pytest
+
+import random
 from bst import BST
 
 
@@ -57,6 +59,23 @@ def test_delete(make_bst):
     for i in b.in_order(b._root):
         a.append(i._data)
     assert a == [3, 6, 7]
+    assert b._root._data == 6
+    with pytest.raises(IndexError):
+        b.delete_node(5)
+
+
+def test_delete_2():
+    b = BST()
+    a = [17, 31, 9, 4, 2, 7, 18, 1, 13, 55, 8, 16, 21, 32]
+    for el in a:
+        b.insert(el)
+    assert b._root._data == a[0]
+    b.delete_node(a[4])
+    a.pop(4)
+    tester = []
+    for i in b.in_order(b._root):
+        tester.append(i._data)
+    assert tester == sorted(a)
 
 
 def test_contains():
