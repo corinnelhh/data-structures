@@ -62,17 +62,15 @@ class BST(object):
                     return tmp, tmp_parent
             tmp_parent = tmp
 
-
-
     def delete_node(self, val):
-        my_node, my_parent = self._find_node(self, val)
-        if not my_node and not my_parent :
+        my_node, my_parent = self._find_node(val)
+        if not my_node and not my_parent:
             return
 
         if my_node._left and my_node._right:
-            my_tmp = my_node._right # my_tmp == 9
+            my_tmp = my_node._right
             if my_tmp._left:
-                while my_tmp._left._left :
+                while my_tmp._left._left:
                     my_tmp = my_tmp._left
                 my_node._data = my_tmp._left._data
                 if my_tmp._left._right:
@@ -86,16 +84,14 @@ class BST(object):
             del_node = None
             if not my_node._left and not my_node._right:
                 del_node = None
-            elif not my_node._right :
+            elif not my_node._right:
                 del_node = my_node._left
             else:
                 del_node = my_node.right
-
             if my_parent._left == my_node:
-               my_parent._left = None
+                my_parent._left = del_node
             else:
-                my_parent._right = None
-
+                my_parent._right = del_node
 
     def contains(self, val):
         parent = self._root
