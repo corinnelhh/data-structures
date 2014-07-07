@@ -114,7 +114,7 @@ class BST(object):
             if node._left:
                 q.insert(0, node._left)
             if node._right:
-                q.insert(0, node._right)
+                q.insert(0, gnode._right)
 
 
 if __name__ == "__main__":
