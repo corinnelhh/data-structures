@@ -50,7 +50,7 @@ class BST(object):
         tmp = self._root
         tmp_parent = None
         while True:
-            if val < tmp._data :
+            if val < tmp._data:
                 tmp = tmp._left
             elif val > tmp._data:
                 tmp = tmp._right
