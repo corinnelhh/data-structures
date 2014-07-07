@@ -105,41 +105,49 @@ class BST(object):
                 yield i
         yield node
 
+
     def level_order(self, node):
-        if not node._visited:
-            node._visited = True
+        if node == self._root :
             yield node
         if node._left:
-            if not node._left._visited:
-                node._left._visited = True
-                yield node._left
+            yield node._left
         if node._right:
-            if not node._right._visited:
-                node._right._visited = True
-                yield node._right
-        for i in self.level_order(node._left):
-            if not i._visited:
-                i._visited = True
-                yield i
-        for i in self.level_order(node._right):
-            if not i._visited:
-                i._visited = True
-                yield i
+            yield node._right
+        if node._left:
+            try:
+                my_generator = self.level_order(node._left)
+                my_node = next(my_generator)
+                yield my_node
+            except:
+                pass
+            try:
+                my_node = next(my_generator)
+                yield my_node
+            except:
+                pass
+        if node._right:
+            try:
+                my_generator = self.level_order(node._right)
+                my_node = next(my_generator)
+                yield my_node
+            except:
+                pass
+            try:
+                my_node = next(my_generator)
+                yield my_node
+            except:
+                pass
 
 
-
-
-
-        # if not self.has_node(n):
-        #     raise IndexError
-        # bf = [n]
-        # n._visited = True
-        # for i in bf:
-        #     for child in self.has_neighbors(i):
-        #         if not child._visited:
-        #             bf.append(child)
-        #             child._visited = True
-        # return bf
+        # q = []
+        # q.insert(0, node)
+        # while q:
+        #     node = q.pop()
+        #     yield node
+        #     if node._left:
+        #         q.insert(0, node._left)
+        #     if node._right:
+        #         q.insert(0, node._right)
 
 
 if __name__ == "__main__":
