@@ -50,6 +50,11 @@ def test_delete(make_bst):
     for i in b.in_order(b._root):
         a.append(i)
     assert a == [1, 3, 6, 7]
+    b.delete(1)
+    a = []
+    for i in b.in_order(b._root):
+        a.append(i)
+    assert a == [3, 6, 7]
 
 
 def test_contains():
