@@ -105,16 +105,37 @@ class BST(object):
                 yield i
         yield node
 
-    def level_order(self, node):
-        q = []
-        q.insert(0, node)
-        while q:
-            node = q.pop()
+    def level_order(self, node, firs=True):
+        if firs :
+            print "yield", node._data
             yield node
-            if node._left:
-                q.insert(0, node._left)
-            if node._right:
-                q.insert(0, node._right)
+        if node._left:
+            yield node._left
+        if node._right:
+            yield node._right
+        if node._left:
+            my_generator = self.level_order(node._left, False)
+            my_node = next(my_generator)
+            yield my_node
+            my_node = next(my_generator)
+            yield my_node
+        if node._right:
+            my_generator = self.level_order(node._right, False)
+            my_node = next(my_generator)
+            yield my_node
+            my_node = next(my_generator)
+            yield my_node
+
+
+        # q = []
+        # q.insert(0, node)
+        # while q:
+        #     node = q.pop()
+        #     yield node
+        #     if node._left:
+        #         q.insert(0, node._left)
+        #     if node._right:
+        #         q.insert(0, node._right)
 
 
 if __name__ == "__main__":
@@ -134,5 +155,5 @@ if __name__ == "__main__":
     our_list = [4, 2, 6, 1, 3, 7, 5]
     for num in our_list:
         b.insert(num)
-    for num in b.level_order(b._root):
+    for num in b.level_order(b._root, True):
         print num._data
