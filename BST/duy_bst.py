@@ -157,8 +157,9 @@ class BST(object):
         tmp = {}
         for i in self._dict:
             tmp[i] = self.depth(i)
-        sort_tmp = sorted(tmp.items(), key=lambda x: x[1])
-        return sort_tmp
+        sort_tmp = sorted(tmp.items(), key=lambda x: (x[1], x[0]))
+        for i in sort_tmp:
+            yield i[0]
 
     def size(self):
         return self._size
@@ -202,7 +203,10 @@ if __name__ == "__main__":
     for i in a.post_order(a._root):
         print i,
 
-    print "\n"+str(a.level_order())
+    print
+    print "Level Order:\t",
+    for i in a.level_order():
+        print i,
 
     # for x in b:
     #     a.delete_node(x)
