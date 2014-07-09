@@ -89,7 +89,7 @@ def test_contains():
     assert btree.contains(10) is False
 
 
-def test_balanced():
+def test_balance():
     b = BST()
     b.insert(10)
     b.insert(5)
@@ -99,9 +99,9 @@ def test_balanced():
     b.insert(1)
     assert b._depth == 5
     assert b._size == 6
-    assert b.is_balanced(b._root) == -3
-    assert b.is_balanced(b._root._left) == -3
-    assert b.is_balanced(b._root._right) == -0
+    assert b.balance(b._root) == -3
+    assert b.balance(b._root._left) == -3
+    assert b.balance(b._root._right) == -0
 
 
 def test_in_order(make_bst):
