@@ -26,4 +26,4 @@ class HashTable(object):
 
 if __name__ == "__main__":
     our_hash = HashTable()
-    print our_hash.hash("happydaysarehereagain")
+    print our_hash.hash("peach")
