@@ -11,19 +11,29 @@ class HashTable(object):
             hashed_item = []
             for el in item:
                 hashed_item.append(ord(el))
-            total = sum(hashed_item)
         else:
             raise TypeError
-        return self.mask_size & total
+        return self.mask_size & sum(hashed_item)
 
     def get(self, item):
-        pass
+        key = self.hash(item)
+        for el in self.hashed[key]:
+            if el == item:
+                print "we found it!"
+                return el
+        else:
+            raise IndexError
 
     def set(self, item):
         key = self.hash(item)
-        self.hashed.insert([key], item)
+        print key
+        self.hashed[key].append(item)
+        print self.hashed[key]
 
 
 if __name__ == "__main__":
     our_hash = HashTable()
-    print our_hash.hash("peach")
+    our_hash.set("alice")
+    our_hash.set("elica")
+    print our_hash.get("elica")
+    print our_hash.get("muazzez")

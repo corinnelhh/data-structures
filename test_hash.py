@@ -13,12 +13,29 @@ Every Unix-like operating system provides a list of dictionary words
 
 
 @pytest.fixture(scope="session")
-def fill_test_lexicon():
+def read_test_lexicon():
+    a = []
     with open("/usr/share/dict/words", 'rb') as f:
-        our_dict = f.readlines()
-    return our_dict
+        a.append(f.read())
+    return a
 
 
-def test_hash_find_vals(fill_test_lexicon):
-    our_dict = fill_test_lexicon
-    pass
+def test_hasher():
+    ht = HashTable()
+    a = ht.hash("alice")
+    b = ht.hash("elica")
+    c = ht.hash("Alice")
+    assert a == b
+    assert a != c
+
+
+def test_hash_fill_table(read_test_lexicon):
+    ht = HashTable()
+    for i in read_test_lexicon:
+        ht.set(i)
+    for i in read_test_lexicon:
+        assert ht.get(i) == i
+
+
+
+
