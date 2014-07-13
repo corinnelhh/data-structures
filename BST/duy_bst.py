@@ -208,17 +208,17 @@ if __name__ == "__main__":
     for i in a.level_order():
         print i,
 
-    # for x in b:
-    #     a.delete_node(x)
-    #     if a._size == 0:
-    #         break
-    #     print
-    #     print "In Order:\t",
-    #     for i in a.in_order(a._root):
-    #         print i,
-    #     print
-    #     for i in a._dict:
-    #         res = str(i)+" "+str(a._dict[i])
-    #         res += "  \t"+str(a._height(i))+"\t"+str(a.balance(i))
-    #         res += "\t"+str(a.depth(i))
-    #         print res
+    for x in b:
+        a.delete_node(x)
+        if a._size == 5:
+            break
+        print
+        print "Level Order:\t",
+        for i in a.level_order():
+            print i,
+        print
+        # for i in a._dict:
+        #     res = str(i)+" "+str(a._dict[i])
+        #     res += "  \t"+str(a._height(i))+"\t"+str(a.balance(i))
+        #     res += "\t"+str(a.depth(i))
+        #     print res
