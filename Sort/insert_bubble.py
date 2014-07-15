@@ -26,8 +26,8 @@ def bubble_sort(iterable):
 
 def time_track(size):
     import time
-    a = [size-i for i in xrange(size)]
-    print "Worst Case"
+    a = [i for i in xrange(size)]
+    print "Best Case"
 
     start = time.clock()
     insertion_sort(a)
@@ -41,7 +41,7 @@ def time_track(size):
 
 
 if __name__ == "__main__":
-    size = 1000
+    size = 2000
     print "Size: "+str(size)
     time_track(size)
     print
@@ -53,19 +53,19 @@ if __name__ == "__main__":
 # Bubble: 0s
 
 # Size: 1000
-# Worst Case
-# Insertion: 0.18s
-# Bubble: 0.21s
+#               Worst Case        Best Case
+# Insertion:    0.18s             0s
+# Bubble:       0.21s             0.09s
 
 # Size: 10000
-# Worst Case
-# Insertion: 18s
-# Bubble: 20s
+#               Worst Case          Best Case:
+# Insertion:    18s                 0s
+# Bubble:       20s                 7.8s
 
 # Size: 20000
-# Worst Case
-# Insertion: 72s
-# Bubble: 81s
+#               Worst Case          Best Case:
+# Insertion:    72s                 0s
+# Bubble:       81s                 32s
 
 # Size: 100000
 # Worst Case
