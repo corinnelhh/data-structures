@@ -22,9 +22,7 @@ def _join(x, y):
     result = []
     ix = iy = 0
     while True:
-        if ix == len(x) and iy == len(y):
-            break
-        elif ix == len(x):
+        if ix == len(x):
             for i in y[iy:]:
                 result.append(i)
             break
