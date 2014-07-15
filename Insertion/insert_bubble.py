@@ -26,10 +26,12 @@ def time_track(size):
     import time
     a = [size-i for i in xrange(size)]
     print "Worst Case"
+
     start = time.clock()
     insertion_sort(a)
     end = time.clock()
     print "Insertion: %.2gs" % (end-start)
+
     start = time.clock()
     bubble_sort(a)
     end = time.clock()
@@ -37,9 +39,9 @@ def time_track(size):
 
 
 if __name__ == "__main__":
-
-    print "Size: "+str(20000)
-    time_track(20000)
+    size = 20000
+    print "Size: "+str(size)
+    time_track(size)
     print
 
 
