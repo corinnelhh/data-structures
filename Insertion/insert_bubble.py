@@ -1,5 +1,5 @@
 def insertion_sort(iterable):
-    x = [i for i in iterable]
+    x = iterable[:]
     for i in range(len(x)-1):
         j = i+1
         while j < len(x):
@@ -10,7 +10,7 @@ def insertion_sort(iterable):
 
 
 def bubble_sort(iterable):
-    x = [i for i in iterable]
+    x = iterable[:]
     y = len(x) - 1
     while y > 0:
         i = 0
@@ -22,7 +22,46 @@ def bubble_sort(iterable):
     return x
 
 
+def time_track(size):
+    import time
+    a = [size-i for i in xrange(size)]
+    print "Worst Case"
+    start = time.clock()
+    insertion_sort(a)
+    end = time.clock()
+    print "Insertion: %.2gs" % (end-start)
+    start = time.clock()
+    bubble_sort(a)
+    end = time.clock()
+    print "Bubble: %.2gs" % (end-start)
+
+
 if __name__ == "__main__":
-    a = [10,9,8,7,6,5,4,3,2,1]
-    print str(insertion_sort(a))
-    print str(bubble_sort(a))
+
+    print "Size: "+str(20000)
+    time_track(20000)
+    print
+
+
+# Size: 100
+# Worst Case
+# Insertion: 0s
+# Bubble: 0s
+
+# Size: 1000
+# Worst Case
+# Insertion: 0.18s
+# Bubble: 0.21s
+
+# Size: 10000
+# Worst Case
+# Insertion: 18s
+# Bubble: 20s
+
+# Size: 20000
+# Worst Case
+# Insertion: 72s
+# Bubble: 81s
+
+# Size: 100000
+# It's not stopping
