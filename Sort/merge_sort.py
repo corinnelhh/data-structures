@@ -1,4 +1,4 @@
-def merge(iterable):
+def merge_sort(iterable):
     x = iterable[:]
     size = len(x)>>1
     return _tail_merge(x[:size], x[size:])
@@ -41,11 +41,37 @@ def _join(x, y):
 
 
 if __name__ == "__main__":
+    import time
     size = 10
     print "Size: "+str(size)
     a = [size-i for i in xrange(size)]
-    print a, str(merge(a))
-    import random
-    a = [random.randint(10, 100) for i in xrange(size)]
-    print a, str(merge(a))
+    b = [i for i in xrange(size)]
+    start = time.clock()
+    merge_sort(a)
+    end = time.clock()
+    print "Worst Case %.2gs" % (end-start)
+    start = time.clock()
+    merge_sort(b)
+    end = time.clock()
+    print "Best Case %.2gs" % (end-start)
 
+
+# Size: 1000
+# Worst Case 0s
+# Best Case 0.01s
+
+# Size: 10000
+# Worst Case 0.06s
+# Best Case 0.05s
+
+# Size: 100000
+# Worst Case 0.63s
+# Best Case 0.61s
+
+# Size: 1000000
+# Worst Case 7.2s
+# Best Case 7s
+
+# Size: 2000000
+# Worst Case 15s
+# Best Case 15s
