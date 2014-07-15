@@ -1,11 +1,13 @@
 def insertion_sort(iterable):
     x = iterable[:]
-    for i in range(len(x)-1):
-        j = i+1
-        while j < len(x):
-            if x[i] > x[j]:
-                x[i], x[j] = x[j], x[i]
-            j += 1
+    for i in range(len(x)):
+        j = i
+        while j > 0:
+            if x[j] < x[j-1]:
+                x[j], x[j-1] = x[j-1], x[j]
+            else:
+                break
+            j -= 1
     return x
 
 
@@ -39,7 +41,7 @@ def time_track(size):
 
 
 if __name__ == "__main__":
-    size = 100000
+    size = 1000
     print "Size: "+str(size)
     time_track(size)
     print
