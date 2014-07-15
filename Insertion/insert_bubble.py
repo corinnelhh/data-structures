@@ -39,7 +39,7 @@ def time_track(size):
 
 
 if __name__ == "__main__":
-    size = 20000
+    size = 100000
     print "Size: "+str(size)
     time_track(size)
     print
@@ -66,4 +66,6 @@ if __name__ == "__main__":
 # Bubble: 81s
 
 # Size: 100000
-# It's not stopping
+# Worst Case
+# Insertion: 1.8e+03s
+# Bubble: -2.4e+03s
