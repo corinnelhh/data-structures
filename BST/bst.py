@@ -14,6 +14,12 @@ class BST(object):
         self._size = 0
         self._root = None
 
+    def size(self):
+        return self._size
+
+    def depth(self):
+        return self._depth
+
     def insert(self, val):
         if not self._root:
             self._root = Node(val)
@@ -74,7 +80,6 @@ class BST(object):
                 else:
                     my_tmp._left = None
             else:
-                #if i have only right child and it doesn't have any children
                 my_tmp._left = my_node._left
                 if self._root == my_node:
                     self._root = my_tmp
@@ -103,19 +108,18 @@ class BST(object):
             parent = parent._left if val < parent._data else parent._right
         return False
 
-    def is_balanced(self, node):
-        left = self.height(node._left) if node._left else node._level
-        right = self.height(node._right) if node._right else node._level
+    def balance(self, node):
+        left = self._height(node._left) if node._left else node._level
+        right = self._height(node._right) if node._right else node._level
         return right - left
 
-    def height(self, node):
-        if not node._left and not node._right:
-            return node._level
-        else:
-            if node._left:
-                return self.height(node._left)
-            if node._right:
-                return self.height(node._right)
+    def _height(self, node):
+        if node:
+            if not node._left and not node._right:
+                return node._level
+            lh = self._height(node._left)
+            rh = self._height(node._right)
+            return lh if lh > rh else rh
 
     def lets_traverse(self, mynode):
         if mynode._left:
@@ -212,9 +216,8 @@ if __name__ == "__main__":
     # b.lets_traverse(p)
 
     b = BST()
-    our_list = [4, 2, 6, 1, 3, 7, 5]
+    our_list = [4, 2, 6, 1, 3, 7, 5, 10, 11, 12]
     for num in our_list:
         b.insert(num)
     for num in b.in_order(b._root):
-        print num._data
-    b.delete_node(5)
+        print num._data, b._height(num)
