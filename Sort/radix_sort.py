@@ -1,6 +1,6 @@
 def radix_sort(iterable):
     bit = 10
-    size = pow(2, bit)
+    size = 1 << bit
     mask = size - 1
     cache = [[] for i in range(size)]
     # count = 0
@@ -22,10 +22,10 @@ def radix_sort(iterable):
     for i in cache:
         for j in i:
             res.append(j)
-    i = 0
-    while i < len(res)-1:
-        assert res[i] <= res[i+1]
-        i += 1
+    # i = 0
+    # while i < len(res)-1:
+    #     assert res[i] <= res[i+1]
+    #     i += 1
     return res
 
 if __name__ == "__main__":
