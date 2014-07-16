@@ -37,7 +37,7 @@ if __name__ == "__main__":
     end = time.clock()
     print "Radix with size 128: %.2gs" % (end-start)
 
-    print "Iteration: ", c, len(a), c/len(a)
+    # print "Iteration: ", c, len(a), c/len(a)
     # count = 0
     # for i in a:
     #     count +=1
