@@ -2,6 +2,7 @@ import pytest
 from insert_bubble import insertion_sort, bubble_sort
 from merge_sort import merge_sort, _join, _tail_merge
 from quick_sort import quick_sort, _median
+from radix_sort import radix_sort
 
 @pytest.fixture(scope="function")
 def build_list():
@@ -47,5 +48,16 @@ def test_quick_sort(build_list):
     for i in xrange(100):
         x = [random.randint(10,100) for i in xrange(20)]
         y = merge_sort(x)
+        z = quick_sort(x)
+        assert y == z
+
+def test_radix_sort(build_list):
+    x, y = build_list
+    assert radix_sort(x) == y
+
+    import random
+    for i in xrange(100):
+        x = [random.randint(10,100) for i in xrange(20)]
+        y = radix_sort(x)
         z = quick_sort(x)
         assert y == z
