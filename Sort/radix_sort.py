@@ -3,11 +3,11 @@ def radix_sort(iterable):
     size = 1 << bit
     mask = size - 1
     cache = [[] for i in range(size)]
-    # count = 0
+    num = 0
     for i in iterable:
         cache[i&mask].append(i)
-        # count += 1
-    num = max([j for i in cache for j in i])
+        if i > num:
+            num = i
     ran = 1
     while num > (size << (bit * (ran - 1))):
         mask = mask << bit
@@ -15,7 +15,6 @@ def radix_sort(iterable):
         for i in cache:
             for j in i:
                 tmp[(j & mask) >> (bit * ran)].append(j)
-                # count += 1
         cache = tmp[:]
         ran += 1
     res = []
@@ -40,7 +39,7 @@ def radix_string(iterable):
     length = (length-1) >> 1
     for i in range(length):
         tmp = [[] for k in range(size)]
-        for bucket in cache:
+        for bucket in cache[1:]:
             for word in bucket:
                 tmp[_index(word, i+2)].append(word)
         cache = tmp[:]
@@ -48,12 +47,12 @@ def radix_string(iterable):
     for i in cache:
         for j in i:
             res.append(j)
-    i = 0
-    while i < len(res)-1:
-        assert len(res[i]) <= len(res[i+1])
-        if len(res[i]) == len(res[i+1]):
-            assert (ord(res[i][0]) & 31) <= (ord(res[i+1][0]) & 31)
-        i += 1
+    # i = 0
+    # while i < len(res)-1:
+    #     assert len(res[i]) <= len(res[i+1])
+    #     if len(res[i]) == len(res[i+1]):
+    #         assert (ord(res[i][0]) & 31) <= (ord(res[i+1][0]) & 31)
+    #     i += 1
     return res
 
 
@@ -115,7 +114,7 @@ if __name__ == "__main__":
 # String: word length - 100
 # Size: 1 million
 # Cache Size: 1024
-# Time: 53.9s
+# Time: 35.2s
 
 # String: word length - 100
 # Size: 1 million
