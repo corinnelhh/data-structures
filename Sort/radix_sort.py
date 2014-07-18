@@ -3,11 +3,9 @@ def radix_sort(iterable):
     size = 1 << bit
     mask = size - 1
     cache = [[] for i in range(size)]
-    num = 0
     for i in iterable:
         cache[i&mask].append(i)
-        if i > num:
-            num = i
+    num = max([j for i in cache for j in i])
     ran = 1
     while num > (size << (bit * (ran - 1))):
         mask = mask << bit
