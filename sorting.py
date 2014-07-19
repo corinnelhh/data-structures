@@ -19,7 +19,6 @@ def merge_sort(i_list):
         mid = len(i_list) / 2
         left = merge_sort(i_list[:mid])
         right = merge_sort(i_list[mid:])
-        print left, right
         return _split_sorting(left, right)
 
 
@@ -42,12 +41,6 @@ def _split_sorting(left, right):
             right = right[1:]
         count += 1
     return ret_list
-
-
-def quick_sort(i_list):
-    pass
-
-
 
 
 def plot_insertion_sort():
@@ -81,56 +74,102 @@ def plot_insertion_sort():
         avg_bests.append((i, b_average))
         avg_worsts.append((i, w_average))
 
-    plt.plot(avg_bests)
+    #plt.plot(avg_bests)
 
 
 if __name__ == '__main__':
+    ##prints information output to terminal about performance of insertion sort
     tester_list = [random.randint(0, 100) for i in range(10)]
-    our_sorted_list = quick_sort(tester_list)
-    print tester_list
-    print our_sorted_list
+    our_sorted_list = insertion_sort(tester_list)
     assert sorted(tester_list) == our_sorted_list
 
-    # our_list = insertion_sort(tester_list)
-    # our_s_list = sorted(tester_list)
-    # try:
-    #     assert our_s_list == our_list
-    #     print
-    #     print "Insertion sort successful"
-    # except AssertionError:
-    #     print "Sorry, your sorting algorithm failed."
-    # print
-    # print "Now testing performance."
-    # print
-    # print "Best case scenario is a perfectly sorted list."
-    # print "Worst case scenerio is a reversed perfectly sorted list."
+    our_list = insertion_sort(tester_list)
+    our_s_list = sorted(tester_list)
+    try:
+        assert our_s_list == our_list
+        print
+        print "Insertion sort successful"
+    except AssertionError:
+        print "Sorry, your sorting algorithm failed."
+    print
+    print "Now testing performance."
+    print
+    print "Best case scenario is a perfectly sorted list."
+    print "Worst case scenerio is a reversed perfectly sorted list."
+    print
 
-    # avg_bests = []
-    # avg_worsts = []
+    avg_bests = []
+    avg_worsts = []
 
-    # for i in range(1, 1002, 100):
-    #     n_tester_list = [random.randint(0, 1000) for m in range(i)]
-    #     count = 0
-    #     b_list = []
-    #     w_list = []
-    #     while count < 10:
-    #         b_start = time.clock()
-    #         insertion_sort(n_tester_list)
-    #         b_end = time.clock()
-    #         b_list.append(b_end - b_start)
+    for i in range(1, 10002, 100):
+        n_tester_list = [random.randint(0, 1000) for m in range(i)]
+        count = 0
+        b_list = []
+        w_list = []
+        while count < 10:
+            b_start = time.clock()
+            insertion_sort(n_tester_list)
+            b_end = time.clock()
+            b_list.append(b_end - b_start)
 
-    #         worst_list = n_tester_list[::-1]
-    #         w_start = time.clock()
-    #         insertion_sort(worst_list)
-    #         w_end = time.clock()
-    #         w_list.append(w_end - w_start)
-    #         count += 1
-    #     b_average = sum(b_list) / 10
-    #     w_average = sum(w_list) / 10
+            worst_list = n_tester_list[::-1]
+            w_start = time.clock()
+            insertion_sort(worst_list)
+            w_end = time.clock()
+            w_list.append(w_end - w_start)
+            count += 1
+        b_average = sum(b_list) / 10
+        w_average = sum(w_list) / 10
 
-    #     print "With n of: ", i
-    #     print "The average time for the best case is: ", b_average
-    #     print "The average time for the worst case is: ", w_average
-    #     print
-    #     avg_bests.append((i, b_average))
-    #     avg_worsts.append((i, w_average))
+        print "Insertion sort with n of: ", i
+        print "The average time for the best case is: ", b_average
+        print "The average time for the worst case is: ", w_average
+        print
+
+   ##prints information output to terminal about performance of merge sort
+    tester_list_2 = [random.randint(0, 100) for i in range(10)]
+    our_sorted_list_2 = merge_sort(tester_list_2)
+    assert sorted(tester_list_2) == our_sorted_list_2
+
+    our_list = merge_sort(tester_list_2)
+    our_s_list = sorted(tester_list_2)
+    try:
+        assert our_s_list == our_list
+        print
+        print "Merge sort successful"
+    except AssertionError:
+        print "Sorry, your sorting algorithm failed."
+    print
+    print "Now testing performance."
+    print
+    print "Best case scenario is a perfectly sorted list."
+    print "Worst case scenerio is a reversed perfectly sorted list."
+    print
+
+    avg_bests = []
+    avg_worsts = []
+
+    for i in range(1, 10002, 100):
+        n_tester_list = [random.randint(0, 1000) for m in range(i)]
+        count = 0
+        b_list = []
+        w_list = []
+        while count < 10:
+            b_start = time.clock()
+            merge_sort(n_tester_list)
+            b_end = time.clock()
+            b_list.append(b_end - b_start)
+
+            worst_list = n_tester_list[::-1]
+            w_start = time.clock()
+            merge_sort(worst_list)
+            w_end = time.clock()
+            w_list.append(w_end - w_start)
+            count += 1
+        b_average = sum(b_list) / 10
+        w_average = sum(w_list) / 10
+
+        print "Merge sort with n of: ", i
+        print "The average time for the best case is: ", b_average
+        print "The average time for the worst case is: ", w_average
+        print
