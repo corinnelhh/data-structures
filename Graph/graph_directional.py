@@ -89,7 +89,6 @@ class Graph(object):
     #         raise IndexError
     #     pass
 
-
     def visit_reset(self):
         for i in self._nodes:
             i._visited = False
@@ -99,31 +98,31 @@ if __name__ == '__main__':
     import random
     g = Graph()
     for i in range(10):
-        a = random.randint(10,99)
+        a = random.randint(10, 99)
         g.add_node(a)
 
     for i in range(40):
-        a = random.randint(0,9)
-        b = random.randint(0,9)
+        a = random.randint(0, 9)
+        b = random.randint(0, 9)
         g.add_edge(g._nodes[a], g._nodes[b])
 
     for i in g._nodes:
-        result = "Node "+str(i._data)+": | "
+        result = "Node " + str(i._data) + ": | "
         for x in g.has_neighbors(i):
-            result += str(x._data)+" | "
+            result += str(x._data) + " | "
         print result
 
     df = []
-    g.df_traversal(g._nodes[0] ,df)
+    g.df_traversal(g._nodes[0], df)
     result = "\nDepth First Search: \n\t"
     for i in df:
-        result += str(i._data) +" | "
+        result += str(i._data) + " | "
     g.visit_reset()
 
     print result + "\n"
     bf = g.bf_traversal(g._nodes[0])
     result = "\nBreadth First Search: \n\t"
     for i in bf:
-        result += str(i._data) +" | "
+        result += str(i._data) + " | "
     print result + "\n"
     g.visit_reset()

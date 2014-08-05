@@ -1,7 +1,8 @@
 class Node(object):
-    def __init__(self, data, node = None):
+    def __init__(self, data, node=None):
         self.data = data
         self.next = node
+
 
 class LinkedList(object):
     def __init__(self, *data):
@@ -22,6 +23,17 @@ class LinkedList(object):
         new_node = Node(val, self.head)
         self.head = new_node
         self.size += 1
+
+    def find_middle(self):
+        tick = False
+        node = self.head
+        half = node
+        while node:
+            node = node.next
+            if tick:
+                half = half.next
+            tick = not tick
+        return half.data
 
     def pop(self):
         old_node = self.head
